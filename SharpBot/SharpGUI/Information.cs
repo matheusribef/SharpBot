@@ -17,7 +17,6 @@ namespace SharpBot.SharpGUI
 {
     public partial class Information : Form
     {
-        Thread antiAfk;
         Thread thread;
         private readonly Profiles Farming = new Profiles();
 
@@ -36,21 +35,16 @@ namespace SharpBot.SharpGUI
                 switch (SharpBot.profile)
                 {
                     case "Scarlet Monastery Armory":
-                        antiAfk = new Thread(AntiAFK);
-                        antiAfk.Start();
                         thread = new Thread(Farming.ScarletMonasteryArmory);
                         thread.Start();
                         break;
                     case "Lower Blackrock Spire":
-                        antiAfk = new Thread(AntiAFK);
-                        antiAfk.Start();
                         thread = new Thread(Farming.LowerBlackrockSpire);
                         thread.Start();
                         break;
                     default:
                         setLog("Please select a profile!");
                         setBtnStart("Start");
-                        antiAfk.Abort();
                         break;
                 }
                 
@@ -63,15 +57,6 @@ namespace SharpBot.SharpGUI
                 thread = null;
             }
             Thread.Sleep(100);
-        }
-
-        void AntiAFK()
-        {
-            Game.Functions.Functions Player = new Game.Functions.Functions();
-            while (true)
-            {
-                Player.avoidAFK();
-            }
         }
     }
 }

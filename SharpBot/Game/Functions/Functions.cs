@@ -144,9 +144,9 @@ namespace SharpBot.Game.Functions
             and also comment out the next two lines of code
             */
             Lua("CastSpellByName(\"Sap\")");
-            Thread.Sleep(500);
+            Thread.Sleep(1000);
             Lua("CastSpellByName(\"Pick Pocket\")");
-            Thread.Sleep(500);
+            Thread.Sleep(1000);
 
             //if not vanished, pickpocket mob
             if (vanishIfSpotted() == false)
@@ -385,12 +385,16 @@ namespace SharpBot.Game.Functions
             //vars
             IntPtr afkAddr = new IntPtr(0x00CF0BC8);
 
+            //get main window
+            var window = sharp.Windows.MainWindow;
+            window.Keyboard.PressRelease(Binarysharp.MemoryManagement.Native.Keys.Space);
+
             //write tick count
             var curTick = sharp[afkAddr, false].Read<int>();
             sharp[afkAddr, false].Write<int>(curTick + 1);
 
-            //wait
-            Thread.Sleep(1);
+            //wait char's fall
+            Thread.Sleep(500);
         }
 
         public IntPtr GetEntityByGuid(ulong guid)
