@@ -259,7 +259,6 @@ namespace SharpBot.Game.Functions
             uint zOld = 0;
             uint xOld = 0;
             bool near = false;
-            var stuckCount = 0;
             IntPtr oldInstance = GetPlayerPtr();
             IntPtr zPosAddr = new IntPtr(0x00BC831C);
             IntPtr xPosAddr = new IntPtr(0x00BC8320);
@@ -280,10 +279,6 @@ namespace SharpBot.Game.Functions
                     break;
                 }
                 if (zOld == zPos && xOld == xPos)
-                {
-                    stuckCount = stuckCount + 1;
-                }
-                if (zOld == zPos && xOld == xPos && stuckCount > 2)
                 {
                     near = true;
                 }
@@ -309,7 +304,7 @@ namespace SharpBot.Game.Functions
                 {
                     Hook(asm);
                 }
-                Thread.Sleep(100);
+                Thread.Sleep(100);//intervalo entre os hooks
                 vanishIfSpotted();
             }
             sharp.Memory.Deallocate(mem_obj);
@@ -499,13 +494,12 @@ namespace SharpBot.Game.Functions
             //get current player state
             var state = GetPlayerPtr();
 
-            //send space key
-            window.Keyboard.Press(Binarysharp.MemoryManagement.Native.Keys.W);
-
             //wait for change player state
             while (state == GetPlayerPtr())
             {
                 Thread.Sleep(100);
+                //send space key
+                window.Keyboard.Press(Binarysharp.MemoryManagement.Native.Keys.W);
             }
 
             //release key
@@ -523,13 +517,12 @@ namespace SharpBot.Game.Functions
             //get current player state
             var state = GetPlayerPtr();
 
-            //send space key
-            window.Keyboard.Press(Binarysharp.MemoryManagement.Native.Keys.S);
-
             //wait for change player state
             while (state == GetPlayerPtr())
             {
                 Thread.Sleep(100);
+                //send space key
+                window.Keyboard.Press(Binarysharp.MemoryManagement.Native.Keys.S);
             }
 
             //release key
