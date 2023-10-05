@@ -352,10 +352,12 @@ namespace SharpBot.Game.Functions
             };
             Hook(asm);
 
+            //tick for jump while walking
+            Thread.Sleep(50);
+
             while (near == false)
             {
                 //get current positions
-                Thread.Sleep(1000);
                 uint zPos = sharp[zPosAddr, false].Read<uint>();
                 uint xPos = sharp[xPosAddr, false].Read<uint>();
 
@@ -364,15 +366,23 @@ namespace SharpBot.Game.Functions
                 {
                     near = true;
                 }
-                else if (jump == false)
+                if (jump == false)
                 {
                     Jump();
+                    Thread.Sleep(1000);
+                }
+                else
+                {
+                    Thread.Sleep(1000);
                 }
                 jump = !jump;
 
                 //set current position as old for checking if moved on next step
                 zOld = zPos;
                 xOld = xPos;
+
+                //hook again just to make sure it is where we want
+                Hook(asm);
             }
            //avoid conflict with Move Func
             Thread.Sleep(1000); 
