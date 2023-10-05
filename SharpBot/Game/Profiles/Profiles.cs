@@ -275,10 +275,10 @@ namespace SharpBot.Game.Profiles
                 Player.Move(1140050390, 1098396362, 3263986086);
                 Player.Move(1140200094, 1097754072, 3264024324);
                 Player.Move(1140288869, 1096630515, 3263972926);
-                Thread.Sleep(500);
+                Thread.Sleep(500);//avoid use bug
                 Player.InteractWithObject(17370386624273202433);//Open first gate
                 Player.Lua("CastSpellByName('Stealth')");
-                Thread.Sleep(1000);
+                Thread.Sleep(1000);//avoid fake spotted bug
                 Player.Move(1140332901, 1096816005, 3263972927);
                 Player.Move(1140455407, 1089786980, 3263918905);
                 Player.Move(1141062878, 1091945286, 3264015629);
@@ -316,6 +316,7 @@ namespace SharpBot.Game.Profiles
                 Player.Move(1142352855, 3263313018, 3262134547);
                 Player.avoidAFK();
                 Player.Move(1142519810, 3260402668, 3262134547);
+                Thread.Sleep(500);
                 Player.InteractWithObject(17370386471617313783);//open hallway
                 Player.Lua("CastSpellByName('Stealth')");
                 Thread.Sleep(1000);
