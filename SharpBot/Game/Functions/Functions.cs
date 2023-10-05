@@ -89,7 +89,7 @@ namespace SharpBot.Game.Functions
             MemorySharp sharp = new MemorySharp(Process.GetProcessesByName("WoW")[0]);
 
             //Hook ResetInstances()
-            for (int i = 1; i < 10; i++)
+            for (int i = 1; i < 5; i++)
             {
                 Lua("ResetInstances();");
                 Thread.Sleep(100);
