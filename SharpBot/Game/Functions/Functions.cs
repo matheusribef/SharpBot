@@ -274,10 +274,6 @@ namespace SharpBot.Game.Functions
 
                 int zDif = (int)z - (int)zPos; //Convert both to int but no data loss
                 int xDif = (int)x - (int)xPos; //Otherwise calculation doesn't work
-                if (pInstance == IntPtr.Zero || pInstance != oldInstance)
-                {
-                    break;
-                }
                 if (zOld == zPos && xOld == xPos)
                 {
                     near = true;
@@ -296,14 +292,7 @@ namespace SharpBot.Game.Functions
                 "push 4",
                 "call " + (uint)MoveFunc
                 };
-                if (pInstance == IntPtr.Zero)//avoid crash
-                {
-                    near = false;
-                }
-                else
-                {
-                    Hook(asm);
-                }
+                Hook(asm);
                 Thread.Sleep(100);//intervalo entre os hooks
                 vanishIfSpotted();
             }
@@ -455,7 +444,7 @@ namespace SharpBot.Game.Functions
             Hook(asm);
 
             //casting time
-            Thread.Sleep(5500);
+            Thread.Sleep(6000);
         }
 
         public void Target(ulong guid)

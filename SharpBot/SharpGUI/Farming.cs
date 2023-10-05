@@ -35,11 +35,6 @@ namespace SharpBot.SharpGUI
                 boxScarletMonasteryArmory.Checked = true;
         }
 
-        internal static void RazorfenDowns()
-        {
-            throw new NotImplementedException();
-        }
-
         private void boxLowerBlackrockSpire_CheckedChanged(object sender, EventArgs e)
         {
             SelectBox(boxLowerBlackrockSpire);
