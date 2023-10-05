@@ -374,24 +374,9 @@ namespace SharpBot.Game.Functions
                 zOld = zPos;
                 xOld = xPos;
             }
-            
-            
+            //avoid conflict with Move Func
+            Thread.Sleep(1000);
 
-
-            
-
-            Thread.Sleep(20);
-                         if (jump == false)
-            {
-                Jump();
-                Thread.Sleep(500);
-            }
-            else
-            {
-                Thread.Sleep(1000);
-            }
-            jump = !jump;
-            
             //avoid memory leak
             sharp.Memory.Deallocate(mem_obj);
             sharp.Memory.Deallocate(mem_destination);
