@@ -374,8 +374,8 @@ namespace SharpBot.Game.Functions
                 zOld = zPos;
                 xOld = xPos;
             }
-            //avoid conflict with Move Func
-            Thread.Sleep(1000);
+           //avoid conflict with Move Func
+            Thread.Sleep(1000); 
 
             //avoid memory leak
             sharp.Memory.Deallocate(mem_obj);
@@ -399,7 +399,7 @@ namespace SharpBot.Game.Functions
             sharp[afkAddr, false].Write<int>(curTick + 1);
 
             //wait char's fall
-            Thread.Sleep(500);
+            Thread.Sleep(1000);
         }
 
         public IntPtr GetEntityByGuid(ulong guid)
