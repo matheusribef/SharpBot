@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.6.33829.357
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SharpBot", "SharpBot\SharpBot.csproj", "{62C4AC94-19FF-47CA-905C-9A3E4867DDEB}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Debug|x86 = Debug|x86
+		Release|Any CPU = Release|Any CPU
+		Release|x86 = Release|x86
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{62C4AC94-19FF-47CA-905C-9A3E4867DDEB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{62C4AC94-19FF-47CA-905C-9A3E4867DDEB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{62C4AC94-19FF-47CA-905C-9A3E4867DDEB}.Debug|x86.ActiveCfg = Debug|x86
+		{62C4AC94-19FF-47CA-905C-9A3E4867DDEB}.Debug|x86.Build.0 = Debug|x86
+		{62C4AC94-19FF-47CA-905C-9A3E4867DDEB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{62C4AC94-19FF-47CA-905C-9A3E4867DDEB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{62C4AC94-19FF-47CA-905C-9A3E4867DDEB}.Release|x86.ActiveCfg = Release|x86
+		{62C4AC94-19FF-47CA-905C-9A3E4867DDEB}.Release|x86.Build.0 = Release|x86
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {E913F729-495C-4C99-93E6-968C1ED6B678}
+	EndGlobalSection
+EndGlobal
