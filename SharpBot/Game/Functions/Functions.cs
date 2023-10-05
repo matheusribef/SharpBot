@@ -258,53 +258,52 @@ namespace SharpBot.Game.Functions
             //vars
             uint zOld = 0;
             uint xOld = 0;
-            var stuckCount = 0;
             bool near = false;
-            IntPtr oldInstance = GetPlayerPtr();
+            IntPtr pInstance = GetPlayerPtr();
             IntPtr zPosAddr = new IntPtr(0x00BC831C);
             IntPtr xPosAddr = new IntPtr(0x00BC8320);
+            IntPtr fixStutter = new IntPtr(0x00860A90);
 
+            //fix movement stutter
+            if (sharp[fixStutter, false].Read<int>() != 0)
+            {
+                sharp[fixStutter, false].Write<int>(0);
+            }
+
+            //Inject and Execute Asm
+            string[] asm = {
+            "mov ecx, " + (uint)pInstance,
+            "push 0",
+            "push " + (uint)mem_destination.BaseAddress,
+            "push " + (uint)mem_obj.BaseAddress,
+            "push 4",
+            "call " + (uint)MoveFunc
+            };
+            Hook(asm);
+
+            //Check if near
             while (near == false)
             {
-                //Make sure pInstance is always updated
-                IntPtr pInstance = GetPlayerPtr(); 
-
-                //Check if near or loading screen
+                //get current positions
+                Thread.Sleep(50);
                 uint zPos = sharp[zPosAddr, false].Read<uint>();
                 uint xPos = sharp[xPosAddr, false].Read<uint>();
 
-                int zDif = (int)z - (int)zPos; //Convert both to int but no data loss
-                int xDif = (int)x - (int)xPos; //Otherwise calculation doesn't work
+                //check if in same position
                 if (zOld == zPos && xOld == xPos)
                 {
-                    stuckCount = stuckCount + 1;
-                }
-                else
-                {
-                    stuckCount = 0;
-                }
-                if (zOld == zPos && xOld == xPos && stuckCount > 3)
-                {
-                    break;
+                    near = true;
                 }
 
                 //set current position as old for checking if moved on next step
                 zOld = zPos;
                 xOld = xPos;
 
-                //Inject and Execute Asm
-                string[] asm = {
-                "mov ecx, " + (uint)pInstance,
-                "push 0",
-                "push " + (uint)mem_destination.BaseAddress,
-                "push " + (uint)mem_obj.BaseAddress,
-                "push 4",
-                "call " + (uint)MoveFunc
-                };
-                Hook(asm);
-                Thread.Sleep(100);//intervalo entre os hooks
+                //Verify if not stealth
                 vanishIfSpotted();
             }
+            
+            //avoid memory leak
             sharp.Memory.Deallocate(mem_obj);
             sharp.Memory.Deallocate(mem_destination);
         }
@@ -330,58 +329,70 @@ namespace SharpBot.Game.Functions
             uint xOld = 0;
             bool jump = false;
             bool near = false;
-            IntPtr oldInstance = GetPlayerPtr();
+            IntPtr pInstance = GetPlayerPtr();
             IntPtr zPosAddr = new IntPtr(0x00BC831C);
             IntPtr xPosAddr = new IntPtr(0x00BC8320);
+            IntPtr fixStutter = new IntPtr(0x00860A90);
+
+            //fix movement stutter
+            if (sharp[fixStutter, false].Read<int>() != 0)
+            {
+                sharp[fixStutter, false].Write<int>(0);
+            }
+
+
+            //Inject and Execute Asm
+            string[] asm = {
+            "mov ecx, " + (uint)pInstance,
+            "push 0",
+            "push " + (uint)mem_destination.BaseAddress,
+            "push " + (uint)mem_obj.BaseAddress,
+            "push 4",
+            "call " + (uint)MoveFunc
+            };
+            Hook(asm);
 
             while (near == false)
             {
-                //Make sure pInstance is always updated
-                IntPtr pInstance = GetPlayerPtr();
-
-                //Check if near or loading screen
+                //get current positions
+                Thread.Sleep(1000);
                 uint zPos = sharp[zPosAddr, false].Read<uint>();
                 uint xPos = sharp[xPosAddr, false].Read<uint>();
 
-                int zDif = (int)z - (int)zPos; //Convert both to int but no data loss
-                int xDif = (int)x - (int)xPos; //Otherwise calculation doesn't work
-                if (pInstance == IntPtr.Zero || pInstance != oldInstance)
-                {
-                    break;
-                }
+                //check if jumped and in same position
                 if (zOld == zPos && xOld == xPos && jump == true)
                 {
                     near = true;
                 }
+                else if (jump == false)
+                {
+                    Jump();
+                }
+                jump = !jump;
 
                 //set current position as old for checking if moved on next step
                 zOld = zPos;
                 xOld = xPos;
-
-                //Inject and Execute Asm
-                string[] asm = {
-                "mov ecx, " + (uint)pInstance,
-                "push 0",
-                "push " + (uint)mem_destination.BaseAddress,
-                "push " + (uint)mem_obj.BaseAddress,
-                "push 4",
-                "call " + (uint)MoveFunc
-                };
-
-                Hook(asm);
-                Thread.Sleep(20);
-
-                if (jump == false)
-                {
-                    Jump();
-                    Thread.Sleep(500);
-                }
-                else
-                {
-                    Thread.Sleep(1000);
-                }
-                jump = !jump;
             }
+            
+            
+
+
+            
+
+            Thread.Sleep(20);
+                         if (jump == false)
+            {
+                Jump();
+                Thread.Sleep(500);
+            }
+            else
+            {
+                Thread.Sleep(1000);
+            }
+            jump = !jump;
+            
+            //avoid memory leak
             sharp.Memory.Deallocate(mem_obj);
             sharp.Memory.Deallocate(mem_destination);
         }
