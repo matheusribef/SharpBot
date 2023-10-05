@@ -258,6 +258,7 @@ namespace SharpBot.Game.Functions
             //vars
             uint zOld = 0;
             uint xOld = 0;
+            var stuckCount = 0;
             bool near = false;
             IntPtr oldInstance = GetPlayerPtr();
             IntPtr zPosAddr = new IntPtr(0x00BC831C);
@@ -276,7 +277,15 @@ namespace SharpBot.Game.Functions
                 int xDif = (int)x - (int)xPos; //Otherwise calculation doesn't work
                 if (zOld == zPos && xOld == xPos)
                 {
-                    near = true;
+                    stuckCount = stuckCount + 1;
+                }
+                else
+                {
+                    stuckCount = 0;
+                }
+                if (zOld == zPos && xOld == xPos && stuckCount > 3)
+                {
+                    break;
                 }
 
                 //set current position as old for checking if moved on next step
