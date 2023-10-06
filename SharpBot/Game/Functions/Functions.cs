@@ -518,7 +518,7 @@ namespace SharpBot.Game.Functions
             {
                 Thread.Sleep(100);
             }
-            Thread.Sleep(5000);
+            Thread.Sleep(15000);
         }
 
         public void MoveIn()
@@ -548,7 +548,7 @@ namespace SharpBot.Game.Functions
             {
                 Thread.Sleep(100);
             }
-            Thread.Sleep(5000);
+            Thread.Sleep(15000);
         }
     }
 }
