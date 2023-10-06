@@ -490,6 +490,23 @@ namespace SharpBot.Game.Functions
             window.Keyboard.PressRelease(Binarysharp.MemoryManagement.Native.Keys.Space);
         }
 
+        public void waitLoadscreen()
+        {
+            //memsharp instance
+            var sharp = new MemorySharp(Process.GetProcessesByName("WoW")[0]);
+
+            //read isIngame var
+            IntPtr isIngame = new IntPtr(0x00B4B424);
+            while (sharp[isIngame, false].Read<int>() == 1)
+            {
+                Thread.Sleep(100);
+            }
+            while (sharp[isIngame, false].Read<int>() == 0)
+            {
+                Thread.Sleep(100);
+            }
+            Thread.Sleep(1000);
+        }
 
         public void MoveOut()
         {
@@ -502,23 +519,14 @@ namespace SharpBot.Game.Functions
             //get current player state
             var state = GetPlayerPtr();
 
-            //wait for change player state
-            while (state == GetPlayerPtr())
-            {
-                Thread.Sleep(100);
-                //send space key
-                window.Keyboard.Press(Binarysharp.MemoryManagement.Native.Keys.W);
-            }
+            //press key
+            window.Keyboard.Press(Binarysharp.MemoryManagement.Native.Keys.W);
+
+            //wait for loadscreen end
+            waitLoadscreen();
 
             //release key
             window.Keyboard.Release(Binarysharp.MemoryManagement.Native.Keys.W);
-
-            //wait for game to load
-            while (GetPlayerPtr() == IntPtr.Zero)
-            {
-                Thread.Sleep(100);
-            }
-            Thread.Sleep(15000);
         }
 
         public void MoveIn()
@@ -529,26 +537,14 @@ namespace SharpBot.Game.Functions
             //get main window
             var window = sharp.Windows.MainWindow;
 
-            //get current player state
-            var state = GetPlayerPtr();
+            //press key
+            window.Keyboard.Press(Binarysharp.MemoryManagement.Native.Keys.S);
 
-            //wait for change player state
-            while (state == GetPlayerPtr())
-            {
-                Thread.Sleep(100);
-                //send space key
-                window.Keyboard.Press(Binarysharp.MemoryManagement.Native.Keys.S);
-            }
+            //wait for loadscreen end
+            waitLoadscreen();
 
             //release key
             window.Keyboard.Release(Binarysharp.MemoryManagement.Native.Keys.S);
-
-            //wait for game to load
-            while (GetPlayerPtr() == IntPtr.Zero)
-            {
-                Thread.Sleep(100);
-            }
-            Thread.Sleep(15000);
         }
     }
 }
