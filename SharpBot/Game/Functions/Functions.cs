@@ -106,7 +106,7 @@ namespace SharpBot.Game.Functions
             var isStealthAddress = new IntPtr(0xBC6C80); //4C dont work anymore, 80 keeps good
             if (sharp[isStealthAddress, false].Read<int>() != 1)
             {
-                Thread.Sleep(2500);
+                Thread.Sleep(3200);
                 while (sharp[isStealthAddress, false].Read<int>() == 0)
                 {
                     Lua("CastSpellByName(\"Vanish\")");
