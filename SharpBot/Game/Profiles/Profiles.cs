@@ -855,10 +855,8 @@ namespace SharpBot.Game.Profiles
                 Player.Move(1139347039, 1105551141, 3264011082);
                 Player.Move(1139168683, 1108125580, 3263868039);
                 Player.MoveOut();
-                Thread.Sleep(30000);
                 Player.ResetInstances();
                 Player.MoveIn();
-                Thread.Sleep(30000);
             }
         }
     }

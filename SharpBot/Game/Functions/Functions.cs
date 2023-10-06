@@ -512,6 +512,11 @@ namespace SharpBot.Game.Functions
 
             //release key
             window.Keyboard.Release(Binarysharp.MemoryManagement.Native.Keys.W);
+
+            while (GetPlayerPtr() == IntPtr.Zero)
+            {
+                Thread.Sleep(1000);
+            }
         }
 
         public void MoveIn()
@@ -535,6 +540,11 @@ namespace SharpBot.Game.Functions
 
             //release key
             window.Keyboard.Release(Binarysharp.MemoryManagement.Native.Keys.S);
+
+            while (GetPlayerPtr() == IntPtr.Zero)
+            {
+                Thread.Sleep(1000);
+            }
         }
     }
 }
