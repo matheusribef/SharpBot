@@ -509,6 +509,7 @@ namespace SharpBot.Game.Profiles
                 Player.PickPocket(17379391111272905245);
                 Player.Move(1141196537, 3274739674, 3255356610);//fix here
                 Player.PickPocket(17379391111239350821);
+                Player.Move(1141134720, 3274699876, 3255371325);
                 Player.Move(1141169075, 3274408856, 3255367386);
                 Player.Move(1141249423, 3274177881, 3255282600);
                 Player.PickPocket(17379391111608449563);
@@ -809,6 +810,7 @@ namespace SharpBot.Game.Profiles
                 Player.Move(1146266805, 3276875205, 3257848559);
                 Player.Move(1146084409, 3275697136, 3259433776);
                 Player.avoidAFK();
+                Player.Lua("CastSpellByName(\"Sprint\")");
                 Player.Move(1146270287, 3274520625, 3259433790);
                 Player.Move(1146453388, 3272808164, 3259433995);
                 Player.Move(1146227291, 3270895384, 3260566387);

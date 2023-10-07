@@ -140,8 +140,8 @@ namespace SharpBot.Game.Functions
             If you not playing in turtle wow, switch Sap to Pick Pocket
             and also comment out the next two lines of code
             */
-            //Lua("CastSpellByName(\"Sap\")");
-            //Thread.Sleep(500);
+            Lua("CastSpellByName(\"Sap\")");
+            Thread.Sleep(500);
             Lua("CastSpellByName(\"Pick Pocket\")");
             Thread.Sleep(500);
             AutoLoot();
@@ -175,6 +175,17 @@ namespace SharpBot.Game.Functions
         }
         public void AutoLoot()
         {
+            //memsharp
+            var sharp = new MemorySharp(Process.GetProcessesByName("WoW")[0]);
+
+            //wait for loot window
+            var HasLootWindowAddr = new IntPtr(0x4C2A70);
+            var IsLooting = 0;
+            while (IsLooting == 0)
+            {
+                IsLooting = sharp[HasLootWindowAddr, false].Read<int>();
+            }
+
             //var
             IntPtr AutoLoot = new IntPtr(0x004C1FA0);
             string[] asm = {
