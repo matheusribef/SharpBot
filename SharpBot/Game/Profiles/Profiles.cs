@@ -570,9 +570,9 @@ namespace SharpBot.Game.Profiles
                 Player.MoveAndJump(1142702695, 3271217951, 3258227671);
                 Player.Move(1142867148, 3271610217, 3258511194);//finish spectators, after two mobs on the corridor
                 Player.Move(1143292372, 3271986340, 3258511192);//corridor to neutrals room
+                Player.avoidAFK();
                 Player.Move(1143350080, 3272330561, 3258511192);
                 Player.PickPocket(17379391111189062396);
-                Player.avoidAFK();
                 Player.Move(1143373674, 3272354985, 3258511192);
                 Player.PickPocket(17379391111189019357);
                 Player.getPlayerEnergy();
@@ -590,9 +590,9 @@ namespace SharpBot.Game.Profiles
                 Player.Move(1144909303, 3263295123, 3258511178);
                 Player.Move(1144858758, 3261019795, 3258511178);
                 Player.PickPocket(17379391111323279969);
-                Player.avoidAFK();
                 Player.Move(1144897630, 3260290339, 3258511178);
                 Player.Move(1144966599, 3262108410, 3258511178);
+                Player.avoidAFK();
                 Player.Move(1144951759, 3260266189, 3258511178);
                 Player.PickPocket(17379391111323237116);
                 Player.Move(1144954634, 3261838143, 3258511178);
@@ -650,13 +650,13 @@ namespace SharpBot.Game.Profiles
                 Player.Move(1146572884, 3272758042, 3259434313);
                 Player.Move(1146580143, 3272658466, 3259434313);
                 Player.PickPocket(17379391122161361802);
-                Player.avoidAFK();
                 Player.Move(1146626067, 3272562925, 3259241438);
                 Player.PickPocket(17379391122161318936);
                 Player.Move(1146619030, 3272861399, 3259434530);
                 Player.Move(1146669595, 3272666633, 3259195002);
                 Player.PickPocket(17379391122161361524);
                 Player.Move(1146706598, 3272944921, 3259434803);
+                Player.avoidAFK();
                 Player.Move(1146762003, 3272950657, 3259434803);
                 Player.PickPocket(17379391122194873387);//pickpocket 5th mob
                 Player.Move(1146824729, 3273127583, 3259434958);
@@ -706,8 +706,8 @@ namespace SharpBot.Game.Profiles
                 Player.PickPocket(17379391122161361671);
                 Player.Move(1146052827, 3273720670, 3259434179);
                 Player.PickPocket(17379391122312356465);
-                Player.avoidAFK();
                 Player.Move(1145981456, 3273632843, 3259434179);
+                Player.avoidAFK();
                 Player.Move(1145944304, 3273666847, 3259434179);
                 Player.PickPocket(17379391122194916283);
                 Player.PickPocket(17379391122194916263);
@@ -724,7 +724,6 @@ namespace SharpBot.Game.Profiles
                 Player.Move(1145866358, 3274278394, 3259434179);
                 Player.Move(1145867178, 3274680406, 3259434179);
                 Player.PickPocket(17379391122312356471);
-                Player.avoidAFK();
                 Player.Move(1145919800, 3274619756, 3259192010);
                 Player.PickPocket(17379391122161361798);
                 Player.Move(1145926909, 3274700279, 3259192010);
@@ -741,11 +740,11 @@ namespace SharpBot.Game.Profiles
                 Player.Move(1146206848, 3275897531, 3259433799);
                 Player.MoveAndJump(1146237269, 3276065675, 3259082599);
                 Player.Move(1146332481, 3276696558, 3257505965);
+                Player.avoidAFK();
                 Player.Move(1146401028, 3276699630, 3257402758);
                 Player.PickPocket(17379391122161361796);
                 Player.PickPocket(17379391122161361801);
                 Player.Move(1146399790, 3276328237, 3257847964);
-                Player.avoidAFK();
                 Player.Move(1146431140, 3276353404, 3257847964);
                 Player.PickPocket(17379391122194916280);
                 Player.Move(1146466206, 3276069853, 3257847964);
@@ -760,12 +759,12 @@ namespace SharpBot.Game.Profiles
                 Player.Move(1146898340, 3275179599, 3257906014);
                 Player.PickPocket(17379391122194915958);
                 Player.Move(1146955765, 3275067029, 3257906014);
-                Player.avoidAFK();
                 Player.PickPocket(17379391122194916285);
                 Player.Move(1146955765, 3275067029, 3257906014);
                 Player.PickPocket(17379391122161361797);
                 Player.Move(1147044260, 3275625268, 3257847935);
                 Player.Move(1147237662, 3275997778, 3257847935);
+                Player.avoidAFK();
                 Player.Move(1147113040, 3276351244, 3257847935);
                 Player.PickPocket(17379391122161318956);
                 Player.Move(1147104951, 3276416592, 3257847935);
@@ -781,7 +780,6 @@ namespace SharpBot.Game.Profiles
                 Player.PickPocket(17379391122161318952);
                 Player.PickPocket(17379391122161361795);
                 Player.Move(1146898791, 3276673645, 3257847935);
-                Player.avoidAFK();
                 Player.PickPocket(17379391122194916100);
                 Player.Move(1146900423, 3276770390, 3257847935);
                 Player.PickPocket(17379391122194915955);
@@ -802,7 +800,6 @@ namespace SharpBot.Game.Profiles
                 Player.PickPocket(17379391122194873308);
                 Player.Move(1146660855, 3276375309, 3257847934);
                 Player.PickPocket(17379391122194916106);
-                Player.avoidAFK();
                 Player.Move(1146620124, 3276595768, 3257847934);
                 Player.Move(1146588290, 3276501696, 3257847934);
                 Player.PickPocket(17379391122194916284);
@@ -811,6 +808,7 @@ namespace SharpBot.Game.Profiles
                 Player.Move(1146484284, 3277631021, 3257845269);//start leaving
                 Player.Move(1146266805, 3276875205, 3257848559);
                 Player.Move(1146084409, 3275697136, 3259433776);
+                Player.avoidAFK();
                 Player.Move(1146270287, 3274520625, 3259433790);
                 Player.Move(1146453388, 3272808164, 3259433995);
                 Player.Move(1146227291, 3270895384, 3260566387);
@@ -820,7 +818,6 @@ namespace SharpBot.Game.Profiles
                 Player.Move(1145643986, 1099833727, 3260461241);
                 Player.Move(1145432765, 1099689129, 3260461212);
                 Player.Move(1145160480, 1108170172, 3260462546);
-                Player.avoidAFK();
                 Player.Move(1144855920, 1108058138, 3260457090);
                 Player.Move(1144837433, 1104277531, 3260453123);
                 Player.Move(1144271135, 1100441701, 3258304046);
@@ -841,10 +838,10 @@ namespace SharpBot.Game.Profiles
                 Player.Move(1142304891, 3264714878, 3258506299);
                 Player.Move(1142304942, 3263025322, 3259656044);
                 Player.Move(1142496873, 3262999746, 3262134404);
-                Player.avoidAFK();
                 Player.Move(1142413394, 3257430416, 3262134772);
                 Player.Move(1141865597, 3256706093, 3262131023);
                 Player.Move(1141700819, 3260452332, 3262126173);
+                Player.avoidAFK();
                 Player.Move(1141586097, 3259429966, 3262342653);
                 Player.Move(1141768584, 3237225080, 3263972927);
                 Player.Move(1141570789, 1065513600, 3263913840);
