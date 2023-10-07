@@ -96,32 +96,26 @@ namespace SharpBot.Game.Functions
             }
         }
 
-        public bool vanishIfSpotted()
+        public void VanishIfSpotted()
         {
             //memsharp instance
             var sharp = new MemorySharp(Process.GetProcessesByName("WoW")[0]);
 
             //vanish if mob resisted pickpocket or Sap spell
-            var vanished = false;
-            var isStealthAddress = new IntPtr(0x00BC6CA0); //4C dont work anymore, 80 keeps good
-            if (sharp[isStealthAddress, false].Read<byte>() != 1)
+            var isStealth = new IntPtr(0x00BC6CA0); //this one is perfect
+
+            //check if not in stealth
+            var isSpotted = sharp[isStealth, false].Read<int>();
+            if (isSpotted != 1)
             {
-                Thread.Sleep(3200);
-                while (sharp[isStealthAddress, false].Read<byte>() == 0)
+                Thread.Sleep(3000);
+                while (isSpotted != 1)
                 {
+                    isSpotted = sharp[isStealth, false].Read<int>();
                     Lua("CastSpellByName(\"Vanish\")");
-                    Thread.Sleep(100);
-                    vanished = true;
+                    Thread.Sleep(10);
                 }
-            }
-            if (vanished == true)
-            {
                 Thread.Sleep(210000);
-                return true;
-            }
-            else
-            {
-                return false;
             }
         }
 
@@ -147,15 +141,13 @@ namespace SharpBot.Game.Functions
             and also comment out the next two lines of code
             */
             Lua("CastSpellByName(\"Sap\")");
-            Thread.Sleep(1000);
+            Thread.Sleep(500);
             Lua("CastSpellByName(\"Pick Pocket\")");
-            Thread.Sleep(1000);
+            Thread.Sleep(500);
+            AutoLoot();
 
             //if not vanished, pickpocket mob
-            if (vanishIfSpotted() == false)
-            {
-                AutoLoot();
-            }
+            VanishIfSpotted();
 }
 
         public void Lua(string str)
@@ -307,7 +299,7 @@ namespace SharpBot.Game.Functions
                 xOld = xPos;
 
                 //Verify if not stealth
-                vanishIfSpotted();
+                VanishIfSpotted();
             }
             
             //avoid memory leak
