@@ -99,7 +99,7 @@ namespace SharpBot
             this.Controls.Add(this.mainPanel);
             this.Controls.Add(this.buttonsPanel);
             this.ForeColor = System.Drawing.Color.White;
-            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
             this.Name = "SharpBot";
             this.Text = "#";
             this.buttonsPanel.ResumeLayout(false);

@@ -103,23 +103,26 @@ namespace SharpBot.Game.Functions
 
             //vanish if mob resisted pickpocket or Sap spell
             var vanished = false;
-            var isStealthAddress = new IntPtr(0xBC6C80); //4C dont work anymore, 80 keeps good
-            if (sharp[isStealthAddress, false].Read<int>() != 1)
+            var isStealthAddress = new IntPtr(0x00BC6CA0); //4C dont work anymore, 80 keeps good
+            if (sharp[isStealthAddress, false].Read<byte>() != 1)
             {
                 Thread.Sleep(3200);
-                while (sharp[isStealthAddress, false].Read<int>() == 0)
+                while (sharp[isStealthAddress, false].Read<byte>() == 0)
                 {
                     Lua("CastSpellByName(\"Vanish\")");
                     Thread.Sleep(100);
+                    vanished = true;
                 }
-                vanished = true;
             }
             if (vanished == true)
             {
                 Thread.Sleep(210000);
                 return true;
             }
-            return false;
+            else
+            {
+                return false;
+            }
         }
 
 
@@ -180,9 +183,11 @@ namespace SharpBot.Game.Functions
         }
         public void AutoLoot()
         {
+            //var
+            IntPtr AutoLoot = new IntPtr(0x004C1FA0);
             string[] asm = {
                 "mov ecx, 0",
-                "call " + (uint)0x004C1FA0,
+                "call " + (uint)AutoLoot,
             };
             Hook(asm); 
         }
@@ -254,6 +259,7 @@ namespace SharpBot.Game.Functions
             mem_obj.Write(object_guid);
             var mem_destination = sharp.Memory.Allocate(1);
             mem_destination.Write(destination);
+            var mem_func = sharp.Memory.Allocate(1);
 
             //vars
             uint zOld = 0;
@@ -277,9 +283,10 @@ namespace SharpBot.Game.Functions
             "push " + (uint)mem_destination.BaseAddress,
             "push " + (uint)mem_obj.BaseAddress,
             "push 4",
-            "call " + (uint)MoveFunc
+            "call " + (uint)MoveFunc,
+            "retn",
             };
-            Hook(asm);
+            sharp.Assembly.InjectAndExecute(asm, mem_func.BaseAddress);
 
             //Check if near
             while (near == false)
@@ -306,6 +313,7 @@ namespace SharpBot.Game.Functions
             //avoid memory leak
             sharp.Memory.Deallocate(mem_obj);
             sharp.Memory.Deallocate(mem_destination);
+            sharp.Memory.Deallocate(mem_func);
         }
 
         public void MoveAndJump(uint z, uint x, uint y)
@@ -323,6 +331,7 @@ namespace SharpBot.Game.Functions
             mem_obj.Write(object_guid);
             var mem_destination = sharp.Memory.Allocate(1);
             mem_destination.Write(destination);
+            var mem_func = sharp.Memory.Allocate(1);
 
             //vars
             uint zOld = 0;
@@ -340,7 +349,6 @@ namespace SharpBot.Game.Functions
                 sharp[fixStutter, false].Write<int>(0);
             }
 
-
             //Inject and Execute Asm
             string[] asm = {
             "mov ecx, " + (uint)pInstance,
@@ -348,9 +356,10 @@ namespace SharpBot.Game.Functions
             "push " + (uint)mem_destination.BaseAddress,
             "push " + (uint)mem_obj.BaseAddress,
             "push 4",
-            "call " + (uint)MoveFunc
+            "call " + (uint)MoveFunc,
+            "retn",
             };
-            Hook(asm);
+            sharp.Assembly.InjectAndExecute(asm, mem_func.BaseAddress);
 
             //tick for jump while walking
             Thread.Sleep(50);
@@ -382,14 +391,15 @@ namespace SharpBot.Game.Functions
                 xOld = xPos;
 
                 //hook again just to make sure it is where we want
-                Hook(asm);
+                sharp.Assembly.InjectAndExecute(asm, mem_func.BaseAddress);
             }
            //avoid conflict with Move Func
-            Thread.Sleep(1000); 
+            Thread.Sleep(1000);
 
             //avoid memory leak
             sharp.Memory.Deallocate(mem_obj);
             sharp.Memory.Deallocate(mem_destination);
+            sharp.Memory.Deallocate(mem_func);
         }
 
         public void avoidAFK()
@@ -418,13 +428,13 @@ namespace SharpBot.Game.Functions
             var sharp = new MemorySharp(Process.GetProcessesByName("WoW")[0]);
 
             //vars
-            IntPtr entityBase = new IntPtr(0xB41414);
+            var firstEntity = true;
             var firstEntityOffset = 0xAC;
             var nextEntityOffset = 0x3C;
             var entityIdOffset = 0x30;
+            var entityBase = new IntPtr(0x00B41414);
 
-            var entityList = sharp[entityBase, false].Read<IntPtr>();
-            var curEntity = sharp[entityList + firstEntityOffset, false].Read<IntPtr>();
+            var curEntity = sharp[entityBase, false].Read<IntPtr>();
 
             try
             {
@@ -433,7 +443,13 @@ namespace SharpBot.Game.Functions
                     ulong currentEntityId = sharp[curEntity + entityIdOffset, false].Read<ulong>();
                     if (currentEntityId == guid)
                         return curEntity;
-                    curEntity = sharp[curEntity + nextEntityOffset, false].Read<IntPtr>();
+                    if (firstEntity == true)
+                    {
+                        curEntity = sharp[curEntity + firstEntityOffset, false].Read<IntPtr>();
+                        firstEntity = false;
+                    }
+                    else
+                        curEntity = sharp[curEntity + nextEntityOffset, false].Read<IntPtr>();
                 }
             }
             catch
@@ -455,7 +471,7 @@ namespace SharpBot.Game.Functions
             string[] asm =
             {
                 "push 0",
-                "mov ecx, " + objPointer,
+                "mov ecx, " + (uint)objPointer,
                 "call " + OnRightClick,
             };
 
