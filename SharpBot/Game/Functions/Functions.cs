@@ -121,6 +121,7 @@ namespace SharpBot.Game.Functions
 
 
         //sap and pickpocket only works in turtle wow due to improved sap modification
+        //remember that pickpocket spell is nerfed in turtle wow, mobs resist almost all the time 
         public void PickPocket(ulong guid)
         {
             //memsharp instance
@@ -140,8 +141,8 @@ namespace SharpBot.Game.Functions
             If you not playing in turtle wow, switch Sap to Pick Pocket
             and also comment out the next two lines of code
             */
-            //Lua("CastSpellByName(\"Sap\")");
-            //Thread.Sleep(500);
+            Lua("CastSpellByName(\"Sap\")");
+            Thread.Sleep(500);
             Lua("CastSpellByName(\"Pick Pocket\")");
             Thread.Sleep(1000);
             AutoLoot();
