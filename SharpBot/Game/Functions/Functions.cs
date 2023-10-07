@@ -108,7 +108,7 @@ namespace SharpBot.Game.Functions
             var isSpotted = sharp[isStealth, false].Read<int>();
             if (isSpotted != 1)
             {
-                Thread.Sleep(3500);
+                Thread.Sleep(2000);
                 while (isSpotted != 1)
                 {
                     isSpotted = sharp[isStealth, false].Read<int>();
@@ -140,8 +140,8 @@ namespace SharpBot.Game.Functions
             If you not playing in turtle wow, switch Sap to Pick Pocket
             and also comment out the next two lines of code
             */
-            Lua("CastSpellByName(\"Sap\")");
-            Thread.Sleep(500);
+            //Lua("CastSpellByName(\"Sap\")");
+            //Thread.Sleep(500);
             Lua("CastSpellByName(\"Pick Pocket\")");
             Thread.Sleep(500);
             AutoLoot();
