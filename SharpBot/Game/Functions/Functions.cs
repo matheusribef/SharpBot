@@ -152,7 +152,7 @@ namespace SharpBot.Game.Functions
             string[] asm = {
                 "mov edx, " + (uint)mem_str.BaseAddress,
                 "mov ecx, " + (uint)mem_str.BaseAddress,
-                "call " + (uint)Lua
+                "call " + Lua,
             };
 
             //call func
@@ -208,8 +208,8 @@ namespace SharpBot.Game.Functions
                 {
                     var ret = sharp.Assembly.InjectAndExecute<IntPtr>(new[]
                     {
-                    "mov eax, " + lastBytes,
-                    "mov ecx, " + firstBytes,
+                    "mov eax, " + (uint)lastBytes,
+                    "mov ecx, " + (uint)firstBytes,
                     "push eax",
                     "push ecx",
                     "call " + RetObjFromPtr,
@@ -263,8 +263,7 @@ namespace SharpBot.Game.Functions
             "push " + (uint)mem_destination.BaseAddress,
             "push " + (uint)mem_obj.BaseAddress,
             "push 4",
-            "call " + (uint)MoveFunc,
-            "retn",
+            "call " + MoveFunc,
             };
             Hook(asm);
 
@@ -336,7 +335,6 @@ namespace SharpBot.Game.Functions
             "push " + (uint)mem_obj.BaseAddress,
             "push 4",
             "call " + (uint)MoveFunc,
-            "retn",
             };
             Hook(asm);
 
