@@ -74,7 +74,7 @@ namespace SharpBot.Game.Functions
                     },
                     HOOK_ADDRESS);
 
-                Thread.Sleep(20); //make sure EBP left injected code
+                Thread.Sleep(50); //make sure EBP left injected code
 
                 sharp.Memory.Deallocate(hook_mem); //memory cleaning
                 sharp.Memory.Deallocate(unhook_flag); //memory cleaning
