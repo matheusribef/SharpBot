@@ -325,8 +325,9 @@ namespace SharpBot.Game.Profiles
                 Player.Move(1142258738, 3261193065, 3262134360);
                 Player.PickPocket(17379391111189062394);
                 Player.Move(1142308880, 3261547901, 3262134293);
-                Player.Move(1142288110, 3259980219, 3262134293);
-                Player.Move(1142071786, 3260527910, 3262126952);
+                Player.Move(1142306385, 3260468830, 3262134347);//modified
+                Player.Move(1142214478, 3259965465, 3262134347);//add one here
+                Player.Move(1142060750, 3260576842, 3262126261);//modify this
                 Player.Move(1142095541, 3260745626, 3262127338);
                 Player.PickPocket(17379391111189017462);
                 Player.Move(1141916566, 3260868039, 3262118866);

@@ -45,7 +45,7 @@ namespace SharpBot.Game.Functions
                     "popfd", //restore flags
                     "popad", //restore registers
                     "call " + (uint)ORIGINAL_FUNCTION, //call original function
-                    "mov byte [" + (uint)unhook_flag.BaseAddress + "], 0x1", //set unhook flag to 1
+                    "mov word [" + (uint)unhook_flag.BaseAddress + "], 1", //set unhook flag to 1
                     "jmp " + ((uint)HOOK_ADDRESS + 5), //jmp back to original return ebp
                 }).ToArray();
 
@@ -62,7 +62,7 @@ namespace SharpBot.Game.Functions
                     HOOK_ADDRESS);
 
                 //wait for unhook flag is set to 1
-                while (sharp[unhook_flag.BaseAddress, false].Read<byte>() == 0)
+                while (sharp[unhook_flag.BaseAddress, false].Read<int>() == 0)
                 {
                 }
 
