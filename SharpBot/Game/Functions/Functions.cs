@@ -301,6 +301,9 @@ namespace SharpBot.Game.Functions
 
                 //Verify if not stealth
                 VanishIfSpotted();
+
+                //keep walking
+                sharp.Assembly.InjectAndExecute(asm, mem_func.BaseAddress);
             }
             
             //avoid memory leak
@@ -329,7 +332,6 @@ namespace SharpBot.Game.Functions
             //vars
             uint zOld = 0;
             uint xOld = 0;
-            bool jump = false;
             bool near = false;
             IntPtr pInstance = GetPlayerPtr();
             IntPtr zPosAddr = new IntPtr(0x00BC831C);
@@ -355,39 +357,37 @@ namespace SharpBot.Game.Functions
             sharp.Assembly.InjectAndExecute(asm, mem_func.BaseAddress);
 
             //tick for jump while walking
-            Thread.Sleep(50);
+            Thread.Sleep(100);
 
+            //jump
+            Jump();
+
+            //check if near loop
             while (near == false)
             {
                 //get current positions
                 uint zPos = sharp[zPosAddr, false].Read<uint>();
                 uint xPos = sharp[xPosAddr, false].Read<uint>();
 
-                //check if jumped and in same position
-                if (zOld == zPos && xOld == xPos && jump == true)
+                //check if in same position
+                if (zOld == zPos && xOld == xPos)
                 {
                     near = true;
                 }
-                if (jump == false)
-                {
-                    Jump();
-                    Thread.Sleep(1000);
-                }
-                else
-                {
-                    Thread.Sleep(1000);
-                }
-                jump = !jump;
 
                 //set current position as old for checking if moved on next step
                 zOld = zPos;
                 xOld = xPos;
 
-                //hook again just to make sure it is where we want
+                //Verify if not stealth
+                VanishIfSpotted();
+
+                //keep walking
                 sharp.Assembly.InjectAndExecute(asm, mem_func.BaseAddress);
+
+                //wait
+                Thread.Sleep(50);
             }
-           //avoid conflict with Move Func
-            Thread.Sleep(1000);
 
             //avoid memory leak
             sharp.Memory.Deallocate(mem_obj);
