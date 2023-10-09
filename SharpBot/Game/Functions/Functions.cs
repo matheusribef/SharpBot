@@ -127,24 +127,11 @@ namespace SharpBot.Game.Functions
             //memsharp instance
             MemorySharp sharp = new MemorySharp(Process.GetProcessesByName("WoW")[0]);
 
-            //wait energy for sap
-            while (getPlayerEnergy() < 65)
-            {
-                Thread.Sleep(100);
-            }
-
             //Select Target
             Target(guid);
 
-            /*
-            Sap only works in turtle wow due to improved sap modification
-            If you not playing in turtle wow, switch Sap to Pick Pocket
-            and also comment out the next two lines of code
-            */
-            //Lua("CastSpellByName(\"Sap\")");
-            //Thread.Sleep(500);
             Lua("CastSpellByName(\"Pick Pocket\")");
-            Thread.Sleep(1000);
+            Thread.Sleep(500);
             AutoLoot();
 
             //if not vanished, pickpocket mob

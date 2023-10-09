@@ -530,9 +530,8 @@ namespace SharpBot.Game.Profiles
                 Player.Move(1141762520, 3272733449, 3256447199);
                 Player.PickPocket(17379391111222573635);
                 Player.Move(1141725342, 3272741772, 3256090835);
-                Player.MoveAndJump(1141565455, 3273286806, 3256080128);
-                Player.MoveAndJump(1141682572, 3272595775, 3255747448);
-                Player.Move(1141439809, 3273340376, 3255551237);
+                Player.MoveAndJump(1141687966, 3272730272, 3256076225);//jump in the first stair
+                Player.MoveAndJump(1141622604, 3272707271, 3255713411);//jump in the second stair
                 Player.Move(1141387389, 3273305951, 3255343062);
                 Player.Move(1141573497, 3272375748, 3255347252);
                 Player.avoidAFK();
