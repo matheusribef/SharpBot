@@ -266,7 +266,7 @@ namespace SharpBot.Game.Functions
             "call " + (uint)MoveFunc,
             "retn",
             };
-            sharp.Assembly.InjectAndExecute(asm, mem_func.BaseAddress);
+            Hook(asm);
 
             //Check if near
             while (near == false)
@@ -288,9 +288,6 @@ namespace SharpBot.Game.Functions
 
                 //Verify if not stealth
                 VanishIfSpotted();
-
-                //keep walking
-                sharp.Assembly.InjectAndExecute(asm, mem_func.BaseAddress);
             }
             
             //avoid memory leak
@@ -341,7 +338,7 @@ namespace SharpBot.Game.Functions
             "call " + (uint)MoveFunc,
             "retn",
             };
-            sharp.Assembly.InjectAndExecute(asm, mem_func.BaseAddress);
+            Hook(asm);
 
             //tick for jump while walking
             Thread.Sleep(100);
@@ -368,12 +365,6 @@ namespace SharpBot.Game.Functions
 
                 //Verify if not stealth
                 VanishIfSpotted();
-
-                //keep walking
-                sharp.Assembly.InjectAndExecute(asm, mem_func.BaseAddress);
-
-                //wait
-                Thread.Sleep(50);
             }
 
             //avoid memory leak
