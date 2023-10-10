@@ -108,7 +108,7 @@ namespace SharpBot.Game.Functions
             var isSpotted = sharp[isStealth, false].Read<int>();
             if (isSpotted != 1)
             {
-                Thread.Sleep(2000);
+                Thread.Sleep(3500);
                 while (isSpotted != 1)
                 {
                     isSpotted = sharp[isStealth, false].Read<int>();
