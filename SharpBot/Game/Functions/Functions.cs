@@ -108,14 +108,14 @@ namespace SharpBot.Game.Functions
             var isSpotted = sharp[isStealth, false].Read<int>();
             if (isSpotted != 1)
             {
-                Thread.Sleep(3500);
+                Thread.Sleep(2500);
                 while (isSpotted != 1)
                 {
                     isSpotted = sharp[isStealth, false].Read<int>();
                     Lua("CastSpellByName(\"Vanish\")");
                     Thread.Sleep(10);
                 }
-                Thread.Sleep(210000);
+                Thread.Sleep(180000);
             }
         }
 
