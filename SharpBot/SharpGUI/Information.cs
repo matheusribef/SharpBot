@@ -31,7 +31,7 @@ namespace SharpBot.SharpGUI
             {
                 setBtnStart("Stop");
                 setLog("Starting selected profile!");
-                
+
                 switch (SharpBot.profile)
                 {
                     case "Scarlet Monastery Armory":
@@ -47,7 +47,7 @@ namespace SharpBot.SharpGUI
                         setBtnStart("Start");
                         break;
                 }
-                
+
             }
             else
             {

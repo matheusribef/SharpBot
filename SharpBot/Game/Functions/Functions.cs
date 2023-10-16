@@ -246,8 +246,6 @@ namespace SharpBot.Game.Functions
             uint xOld = 0;
             bool near = false;
             IntPtr pInstance = GetPlayerPtr();
-            IntPtr zPosAddr = new IntPtr(0x00BC831C);
-            IntPtr xPosAddr = new IntPtr(0x00BC8320);
             IntPtr fixStutter = new IntPtr(0x00860A90);
 
             //fix movement stutter
@@ -272,13 +270,17 @@ namespace SharpBot.Game.Functions
             {
                 //get current positions
                 Thread.Sleep(50);
-                uint zPos = sharp[zPosAddr, false].Read<uint>();
-                uint xPos = sharp[xPosAddr, false].Read<uint>();
+                uint zPos = sharp[pInstance + 0x9B8, false].Read<uint>();
+                uint xPos = sharp[pInstance + 0x9BC, false].Read<uint>();
 
-                //check if in same position
+                //check if in same position or near
                 if (zOld == zPos && xOld == xPos)
                 {
                     near = true;
+                }
+                else if (Math.Abs((int)zPos - (int)z) < 1000 && Math.Abs((int)xPos - (int)x) < 1000)
+                {
+                    break;
                 }
 
                 //set current position as old for checking if moved on next step
@@ -317,8 +319,6 @@ namespace SharpBot.Game.Functions
             uint xOld = 0;
             bool near = false;
             IntPtr pInstance = GetPlayerPtr();
-            IntPtr zPosAddr = new IntPtr(0x00BC831C);
-            IntPtr xPosAddr = new IntPtr(0x00BC8320);
             IntPtr fixStutter = new IntPtr(0x00860A90);
 
             //fix movement stutter
@@ -348,13 +348,17 @@ namespace SharpBot.Game.Functions
             while (near == false)
             {
                 //get current positions
-                uint zPos = sharp[zPosAddr, false].Read<uint>();
-                uint xPos = sharp[xPosAddr, false].Read<uint>();
+                uint zPos = sharp[pInstance + 0x9B8, false].Read<uint>();
+                uint xPos = sharp[pInstance + 0x9BC, false].Read<uint>();
 
                 //check if in same position
                 if (zOld == zPos && xOld == xPos)
                 {
                     near = true;
+                }
+                else if (Math.Abs((int)zPos - (int)z) < 1000 && Math.Abs((int)xPos - (int)x) < 1000)
+                {
+                    break;
                 }
 
                 //set current position as old for checking if moved on next step
@@ -530,6 +534,137 @@ namespace SharpBot.Game.Functions
 
             //release key
             window.Keyboard.Release(Binarysharp.MemoryManagement.Native.Keys.S);
+        }
+
+        public void Teleport(uint z, uint x, uint y)
+        {
+            //memsharp instance
+            var sharp = new MemorySharp(Process.GetProcessesByName("WoW")[0]);
+
+            //vars
+            var lPlayer = GetPlayerPtr();
+            var jmpBackAddr = new IntPtr(0x005F1F27);
+            var updPosition = new IntPtr(0x007C4930);
+            var hookAddress = new IntPtr(0x005F1F22);
+            var unhook_flag = sharp.Memory.Allocate(1);
+
+            //call update movement
+            var mem_call = sharp.Memory.Allocate(1);
+            string[] c_asm = {
+                "call " + updPosition,
+                "jmp " + jmpBackAddr,
+            };
+            sharp.Assembly.Inject(c_asm, mem_call.BaseAddress);
+
+            //inject exploit
+            var xPos = sharp[lPlayer + 0x9B8, false].Read<uint>();
+            var zPos = sharp[lPlayer + 0x9BC, false].Read<uint>();
+            var mem_func = sharp.Memory.Allocate(1);
+            string[] asm = {
+                "cmp dword[eax], " + xPos,
+                "jne " + mem_call.BaseAddress,
+                "cmp dword[eax+4], " + zPos,
+                "jne " + mem_call.BaseAddress,
+                "mov dword [eax], " + z,
+                "mov dword [eax+4], " + x,
+                "mov dword [eax+8], " + y,
+                "mov dword [" + unhook_flag.BaseAddress + "], 1",
+                "jmp " + mem_call.BaseAddress,
+            };
+            sharp.Assembly.Inject(asm, mem_func.BaseAddress);
+
+            //set exploit jmp
+            sharp.Assembly.Inject(new[] {
+                "jmp " + mem_func.BaseAddress,
+            }, hookAddress);
+
+            //wait for unhook flag
+            while (sharp[unhook_flag.BaseAddress, false].Read<int>() != 0)
+            {
+            }
+
+            //unhook
+            sharp.Assembly.Inject(new[] {
+                "call " + updPosition,
+            }, hookAddress);
+
+            //wait eip to leave function
+            Thread.Sleep(100);
+
+            //avoid memory leak
+            sharp.Memory.Deallocate(mem_call);
+            sharp.Memory.Deallocate(mem_func);
+            sharp.Memory.Deallocate(unhook_flag);
+        }
+
+        public List<IntPtr> getPPEntities()
+        {
+            //memsharp instance
+            var sharp = new MemorySharp(Process.GetProcessesByName("WoW")[0]);
+
+            //vars
+            IntPtr curEntity;
+            IntPtr entityList;
+            int curEntityType;
+            IntPtr curEntityCache;
+            var entityCache = 0xB30;
+            var nextEntityOffset = 0x3C;
+            var entityTypeOffset = 0x18;
+            var firstEntityOffset = 0xAC;
+            var entityBase = new IntPtr(0x00B41414);
+            List<IntPtr> Entities = new List<IntPtr>();
+
+            //create entity list
+            entityList = sharp[entityBase, false].Read<IntPtr>();
+            curEntity = sharp[entityList + firstEntityOffset, false].Read<IntPtr>();
+            curEntityCache = sharp[curEntity + entityCache, false].Read<IntPtr>();
+            curEntityType = sharp[curEntityCache + entityTypeOffset, false].Read<int>();
+            try
+            {
+                while (true)
+                {
+                    if (curEntityType == 6 || curEntityType == 7)
+                    {
+                        Entities.Append(curEntity);
+                    }
+                    curEntity = sharp[curEntity + nextEntityOffset, false].Read<IntPtr>();
+                    curEntityCache = sharp[curEntity + entityCache, false].Read<IntPtr>();
+                    curEntityType = sharp[curEntityCache + entityTypeOffset, false].Read<int>();
+                }
+            }
+            catch
+            {
+                return Entities;
+            }
+        }
+
+        public void TeleportPickPocket(IntPtr entity)
+        {
+            //memsharp instance
+            var sharp = new MemorySharp(Process.GetProcessesByName("WoW")[0]);
+
+            //vars
+            uint z;
+            uint x;
+            uint y;
+            ulong EntityId;
+            var OffsetZ = 0xBF0;
+            var OffsetX = 0xBF4;
+            var OffsetY = 0xBF8;
+            var EntityIdOffset = 0x30;
+
+            //read x, y, z and mob guid
+            z = sharp[entity + OffsetZ, false].Read<uint>();
+            x = sharp[entity + OffsetX, false].Read<uint>();
+            y = sharp[entity + OffsetY, false].Read<uint>();
+            EntityId = sharp[entity + EntityIdOffset, false].Read<ulong>();
+
+            //teleport below
+            y = y - 100000;
+            Teleport(z, x, y);
+
+            //pickpocket mob
+            PickPocket(EntityId);
         }
     }
 }
