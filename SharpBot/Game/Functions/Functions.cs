@@ -653,7 +653,8 @@ namespace SharpBot.Game.Functions
             //leave if mob resist
             LeaveIfSpotted();
 
-            //autoloot
+            //wait for loot window and pickpocket
+            Thread.Sleep(200);
             AutoLoot();
         }
 
