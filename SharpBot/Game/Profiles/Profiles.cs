@@ -1210,6 +1210,126 @@ namespace SharpBot.Game.Profiles
                 Player.TeleportPickPocket(17379391117514028619, low);
                 //end
 
+                //upper blackrock spire part
+                Player.Teleport(1123336846, 3282194683, 1116935417);
+                Player.TeleportPickPocket(17379391126741491012, low);
+                Player.TeleportPickPocket(17379391126724713793, low);
+                Player.TeleportPickPocket(17379391126724713792, low);
+                Player.TeleportPickPocket(17379391126741491011, low);
+                Player.TeleportPickPocket(17379391126741491003, low);
+                Player.TeleportPickPocket(17379391126724713788, low);
+                Player.TeleportPickPocket(17379391126758268221, low);
+                Player.TeleportPickPocket(17379391126724713794, low);
+                Player.TeleportPickPocket(17379391126758268230, low);
+                Player.TeleportPickPocket(17379391126724713801, low);
+                Player.TeleportPickPocket(17379391126724713800, low);
+                Player.TeleportPickPocket(17379391126741491015, low);
+                Player.TeleportPickPocket(17379391126724713797, low);
+                Player.TeleportPickPocket(17379391126758273802, low);
+                Player.TeleportPickPocket(17379391126741491007, low);
+                Player.TeleportPickPocket(17379391126758268222, low);
+                Player.TeleportPickPocket(17379391126758273801, low);
+                Player.TeleportPickPocket(17379391126741491019, low);
+                Player.TeleportPickPocket(17379391126724713802, low);
+                Player.TeleportPickPocket(17379391126758268236, low);
+                Player.TeleportPickPocket(17379391126741496584, low);
+                Player.TeleportPickPocket(17379391126724713805, low);
+                Player.TeleportPickPocket(17379391126741491022, low);
+                Player.TeleportPickPocket(17379391126724713807, low);
+                Player.TeleportPickPocket(17379391126758268240, low);
+                Player.TeleportPickPocket(17379391126758268425, low);
+                Player.TeleportPickPocket(17379391126724713992, low);
+                Player.TeleportPickPocket(17379391126741491207, low);
+                Player.TeleportPickPocket(17379391126758268245, low);
+                Player.TeleportPickPocket(17379391126758268467, low);
+                Player.TeleportPickPocket(17379391126758268466, low);
+                Player.TeleportPickPocket(17379391126741491252, low);
+                Player.TeleportPickPocket(17379391126724714037, low);
+                Player.TeleportPickPocket(17379391126724719366, low);
+                Player.TeleportPickPocket(17379391126758268460, low);
+                Player.TeleportPickPocket(17379391126758268459, low);
+                Player.TeleportPickPocket(17379391126741491267, low);
+                Player.TeleportPickPocket(17379391126758268477, low);
+                Player.TeleportPickPocket(17379391126724714044, low);
+                Player.TeleportPickPocket(17379391126758268426, low);
+                Player.TeleportPickPocket(17379391138335575510, low);
+                Player.TeleportPickPocket(17379391126758268462, low);
+                Player.TeleportPickPocket(17379391126758268461, low);
+                Player.TeleportPickPocket(17379391126758268456, low);
+                Player.TeleportPickPocket(17379391135113322025, low);
+                Player.TeleportPickPocket(17379391126758268475, low);
+                Player.TeleportPickPocket(17379391126758268474, low);
+                Player.TeleportPickPocket(17379391126758268473, low);
+                Player.TeleportPickPocket(17379391135113322046, low);
+                Player.TeleportPickPocket(17379391135113322007, low);
+                Player.TeleportPickPocket(17379391126758268455, low);
+                Player.TeleportPickPocket(17379391126758268458, low);
+                Player.TeleportPickPocket(17379391126758268450, low);
+                Player.TeleportPickPocket(17379391126758268485, low);
+                Player.TeleportPickPocket(17379391135113322052, low);
+                Player.TeleportPickPocket(17379391126758268486, low);
+                Player.TeleportPickPocket(17379391126758268482, low);
+                Player.TeleportPickPocket(17379391138335575510, low);
+                Player.TeleportPickPocket(17379391126758269779, low);
+                Player.TeleportPickPocket(17379391126758269642, low);
+                Player.TeleportPickPocket(17379391126724715259, low);
+                Player.TeleportPickPocket(17379391126741492527, low);
+                Player.TeleportPickPocket(17379391126724719363, low);
+                Player.TeleportPickPocket(17379391126758273794, low);
+                Player.TeleportPickPocket(17379391126741492575, low);
+                Player.TeleportPickPocket(17379391126724715356, low);
+                Player.TeleportPickPocket(17379391126758269790, low);
+                Player.TeleportPickPocket(17379391126758269789, low);
+                Player.TeleportPickPocket(17379391126758273791, low);
+                Player.TeleportPickPocket(17379391126741492628, low);
+                Player.TeleportPickPocket(17379391126724719360, low);
+                Player.TeleportPickPocket(17379391126758269843, low);
+                Player.TeleportPickPocket(17379391142579184810, low);
+                Player.TeleportPickPocket(17379391142579184809, low);
+
+                Player.TeleportPickPocket(17379391135130101321, low);
+                Player.TeleportPickPocket(17379391135113324104, low);
+                Player.TeleportPickPocket(17379391135130100908, low);
+                Player.TeleportPickPocket(17379391135146878543, low);
+                Player.TeleportPickPocket(17379391135146878544, low);
+                Player.TeleportPickPocket(17379391135146878123, low);
+                Player.TeleportPickPocket(17379391135146878538, low);
+                Player.TeleportPickPocket(17379391135114355543, low);
+                Player.TeleportPickPocket(17379391135131132760, low);
+                Player.TeleportPickPocket(17379391135113324175, low);
+                Player.TeleportPickPocket(17379391135113323695, low);
+                Player.TeleportPickPocket(17379391135113323694, low);
+                Player.TeleportPickPocket(17379391135113324107, low);
+                Player.TeleportPickPocket(17379391135113324108, low);
+                Player.TeleportPickPocket(17379391135130101414, low);
+                Player.TeleportPickPocket(17379391135130101390, low);
+                Player.TeleportPickPocket(17379391135114349790, low);
+                Player.TeleportPickPocket(17379391135147904224, low);
+                Player.TeleportPickPocket(17379391135147904221, low);
+                Player.TeleportPickPocket(17379391135131132758, low);
+                Player.TeleportPickPocket(17379391135147904223, low);
+                Player.TeleportPickPocket(17379391135147904226, low);
+                Player.TeleportPickPocket(17379391135147904228, low);
+                Player.TeleportPickPocket(17379391135147904224, low);
+                Player.TeleportPickPocket(17379391135114349795, low);
+                Player.TeleportPickPocket(17379391135147904233, low);
+                Player.TeleportPickPocket(17379391135131127015, low);
+                Player.TeleportPickPocket(17379391135147909968, low);
+                Player.TeleportPickPocket(17379391135147909969, low);
+                Player.TeleportPickPocket(17379391136037102421, low);
+                Player.TeleportPickPocket(17379391135131132754, low);
+                Player.TeleportPickPocket(17379391135131132756, low);
+                Player.TeleportPickPocket(17379391135147909983, low);
+                Player.TeleportPickPocket(17379391135114355548, low);
+                Player.TeleportPickPocket(17379391135147909985, low);
+                Player.TeleportPickPocket(17379391135147904237, low);
+                Player.TeleportPickPocket(17379391135147904234, low);
+                Player.TeleportPickPocket(17379391135131127013, low);
+                Player.TeleportPickPocket(17379391135114355554, low);
+                Player.TeleportPickPocket(17379391135114355558, low);
+                Player.TeleportPickPocket(17379391135147909989, low);
+                //end
+
                 //leave instance
                 Player.Teleport(1117404522, 3277776010, 1111972990);
                 Player.MoveOut();
@@ -1219,7 +1339,7 @@ namespace SharpBot.Game.Profiles
                 Player.MoveIn();
 
                 //wait to avoid instance cooldown
-                Thread.Sleep(5 * 60000);
+                //Thread.Sleep(1 * 60000);
             }
         }
     }

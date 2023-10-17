@@ -678,10 +678,11 @@ namespace SharpBot.Game.Functions
                 MoveOut();
                 MoveIn();
                 localPlayer = GetPlayerPtr();
-                while (sharp[localPlayer + healthOffset, false].Read<int>() <= sharp[localPlayer + maxHealthOffset, false].Read<int>() - 500)
+                while (sharp[localPlayer + healthOffset, false].Read<int>() < sharp[localPlayer + maxHealthOffset, false].Read<int>())
                 {
                 }
                 Lua("CastSpellByName(\"Stealth\")");
+                Thread.Sleep(1000);
                 Teleport(oldZ, oldX, oldY);
                 Thread.Sleep(500);
             }
