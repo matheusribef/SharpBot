@@ -647,12 +647,14 @@ namespace SharpBot.Game.Functions
             //Select Target
             Target(guid);
 
+            //pickpocket
             Lua("CastSpellByName(\"Pick Pocket\")");
-            Thread.Sleep(500);
-            AutoLoot();
 
-            //if not vanished, pickpocket mob
+            //leave if mob resist
             LeaveIfSpotted();
+
+            //autoloot
+            AutoLoot();
         }
 
         public void LeaveIfSpotted()
@@ -661,16 +663,17 @@ namespace SharpBot.Game.Functions
             var sharp = new MemorySharp(Process.GetProcessesByName("WoW")[0]);
 
             //vars
+            IntPtr localPlayer;
             uint oldZ, oldX, oldY;
             var healthOffset = 0x1DC8;
             var maxHealthOffset = 0x1DE0;
-            var localPlayer = GetPlayerPtr();
             var isStealth = new IntPtr(0x00BC6CA0); //this one is perfect
 
             //check if not in stealth
             var isSpotted = sharp[isStealth, false].Read<int>();
             if (isSpotted != 1)
             {
+                localPlayer = GetPlayerPtr();
                 oldZ = sharp[localPlayer + 0x9B8, false].Read<uint>();
                 oldX = sharp[localPlayer + 0x9BC, false].Read<uint>();
                 oldY = sharp[localPlayer + 0x9C0, false].Read<uint>();
@@ -678,11 +681,12 @@ namespace SharpBot.Game.Functions
                 MoveOut();
                 MoveIn();
                 localPlayer = GetPlayerPtr();
-                while (sharp[localPlayer + healthOffset, false].Read<int>() < sharp[localPlayer + maxHealthOffset, false].Read<int>())
+                while (sharp[localPlayer + healthOffset, false].Read<int>() <
+                    sharp[localPlayer + maxHealthOffset, false].Read<int>())
                 {
                 }
                 Lua("CastSpellByName(\"Stealth\")");
-                Thread.Sleep(1000);
+                Thread.Sleep(500);
                 Teleport(oldZ, oldX, oldY);
                 Thread.Sleep(500);
             }
