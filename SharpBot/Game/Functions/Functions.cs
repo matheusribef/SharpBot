@@ -136,7 +136,7 @@ namespace SharpBot.Game.Functions
 
             //if not vanished, pickpocket mob
             VanishIfSpotted();
-}
+        }
 
         public void Lua(string str)
         {
@@ -557,13 +557,16 @@ namespace SharpBot.Game.Functions
             sharp.Assembly.Inject(c_asm, mem_call.BaseAddress);
 
             //inject exploit
-            var xPos = sharp[lPlayer + 0x9B8, false].Read<uint>();
-            var zPos = sharp[lPlayer + 0x9BC, false].Read<uint>();
+            var zPos = sharp[lPlayer + 0x9B8, false].Read<uint>();
+            var xPos = sharp[lPlayer + 0x9BC, false].Read<uint>();
+            var yPos = sharp[lPlayer + 0x9C0, false].Read<uint>();
             var mem_func = sharp.Memory.Allocate(1);
             string[] asm = {
-                "cmp dword[eax], " + xPos,
+                "cmp dword[eax], " + zPos,
                 "jne " + mem_call.BaseAddress,
-                "cmp dword[eax+4], " + zPos,
+                "cmp dword[eax+4], " + xPos,
+                "jne " + mem_call.BaseAddress,
+                "cmp dword[eax+8], " + yPos,
                 "jne " + mem_call.BaseAddress,
                 "mov dword [eax], " + z,
                 "mov dword [eax+4], " + x,
@@ -579,7 +582,7 @@ namespace SharpBot.Game.Functions
             }, hookAddress);
 
             //wait for unhook flag
-            while (sharp[unhook_flag.BaseAddress, false].Read<int>() != 0)
+            while (sharp[unhook_flag.BaseAddress, false].Read<int>() == 0)
             {
             }
 
@@ -595,76 +598,93 @@ namespace SharpBot.Game.Functions
             sharp.Memory.Deallocate(mem_call);
             sharp.Memory.Deallocate(mem_func);
             sharp.Memory.Deallocate(unhook_flag);
+
+            //update movement sending key (undetected)
+            sharp.Windows.MainWindow.Keyboard.PressRelease(Binarysharp.MemoryManagement.Native.Keys.D);
+            sharp.Windows.MainWindow.Keyboard.PressRelease(Binarysharp.MemoryManagement.Native.Keys.A);
+
         }
-
-        public List<IntPtr> getPPEntities()
+        public void TeleportPickPocket(ulong guid, int distance)
         {
-            //memsharp instance
-            var sharp = new MemorySharp(Process.GetProcessesByName("WoW")[0]);
-
-            //vars
-            IntPtr curEntity;
-            IntPtr entityList;
-            int curEntityType;
-            IntPtr curEntityCache;
-            var entityCache = 0xB30;
-            var nextEntityOffset = 0x3C;
-            var entityTypeOffset = 0x18;
-            var firstEntityOffset = 0xAC;
-            var entityBase = new IntPtr(0x00B41414);
-            List<IntPtr> Entities = new List<IntPtr>();
-
-            //create entity list
-            entityList = sharp[entityBase, false].Read<IntPtr>();
-            curEntity = sharp[entityList + firstEntityOffset, false].Read<IntPtr>();
-            curEntityCache = sharp[curEntity + entityCache, false].Read<IntPtr>();
-            curEntityType = sharp[curEntityCache + entityTypeOffset, false].Read<int>();
             try
             {
-                while (true)
-                {
-                    if (curEntityType == 6 || curEntityType == 7)
-                    {
-                        Entities.Append(curEntity);
-                    }
-                    curEntity = sharp[curEntity + nextEntityOffset, false].Read<IntPtr>();
-                    curEntityCache = sharp[curEntity + entityCache, false].Read<IntPtr>();
-                    curEntityType = sharp[curEntityCache + entityTypeOffset, false].Read<int>();
-                }
+                //memsharp instance
+                var sharp = new MemorySharp(Process.GetProcessesByName("WoW")[0]);
+
+                //get entity
+                var entity = GetEntityByGuid(guid);
+
+                //vars
+                uint z;
+                uint x;
+                uint y;
+                ulong EntityId;
+                var OffsetZ = 0x9B8;
+                var OffsetX = 0x9BC;
+                var OffsetY = 0x9C0;
+                var EntityIdOffset = 0x30;
+
+                //read x, y, z and mob guid
+                z = sharp[entity + OffsetZ, false].Read<uint>();
+                x = sharp[entity + OffsetX, false].Read<uint>();
+                y = sharp[entity + OffsetY, false].Read<uint>();
+                EntityId = sharp[entity + EntityIdOffset, false].Read<ulong>();
+
+                //teleport above
+                var newY = (uint)((int)y + (int)distance);
+                Teleport(z, x, newY);
+
+                //pickpocket mob
+                PickPocketForTeleport(EntityId);
             }
-            catch
-            {
-                return Entities;
-            }
+            catch { }
+        }
+        public void PickPocketForTeleport(ulong guid)
+        {
+            //memsharp instance
+            MemorySharp sharp = new MemorySharp(Process.GetProcessesByName("WoW")[0]);
+
+            //Select Target
+            Target(guid);
+
+            Lua("CastSpellByName(\"Pick Pocket\")");
+            Thread.Sleep(500);
+            AutoLoot();
+
+            //if not vanished, pickpocket mob
+            LeaveIfSpotted();
         }
 
-        public void TeleportPickPocket(IntPtr entity)
+        public void LeaveIfSpotted()
         {
             //memsharp instance
             var sharp = new MemorySharp(Process.GetProcessesByName("WoW")[0]);
 
             //vars
-            uint z;
-            uint x;
-            uint y;
-            ulong EntityId;
-            var OffsetZ = 0xBF0;
-            var OffsetX = 0xBF4;
-            var OffsetY = 0xBF8;
-            var EntityIdOffset = 0x30;
+            uint oldZ, oldX, oldY;
+            var healthOffset = 0x1DC8;
+            var maxHealthOffset = 0x1DE0;
+            var localPlayer = GetPlayerPtr();
+            var isStealth = new IntPtr(0x00BC6CA0); //this one is perfect
 
-            //read x, y, z and mob guid
-            z = sharp[entity + OffsetZ, false].Read<uint>();
-            x = sharp[entity + OffsetX, false].Read<uint>();
-            y = sharp[entity + OffsetY, false].Read<uint>();
-            EntityId = sharp[entity + EntityIdOffset, false].Read<ulong>();
-
-            //teleport below
-            y = y - 100000;
-            Teleport(z, x, y);
-
-            //pickpocket mob
-            PickPocket(EntityId);
+            //check if not in stealth
+            var isSpotted = sharp[isStealth, false].Read<int>();
+            if (isSpotted != 1)
+            {
+                oldZ = sharp[localPlayer + 0x9B8, false].Read<uint>();
+                oldX = sharp[localPlayer + 0x9BC, false].Read<uint>();
+                oldY = sharp[localPlayer + 0x9C0, false].Read<uint>();
+                Teleport(1117404522, 3277776010, 1111972990);
+                MoveOut();
+                MoveIn();
+                localPlayer = GetPlayerPtr();
+                while (sharp[localPlayer + healthOffset, false].Read<int>() <= sharp[localPlayer + maxHealthOffset, false].Read<int>() - 500)
+                {
+                }
+                Lua("CastSpellByName(\"Stealth\")");
+                Teleport(oldZ, oldX, oldY);
+                Thread.Sleep(500);
+            }
         }
     }
 }

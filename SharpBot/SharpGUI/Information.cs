@@ -19,6 +19,7 @@ namespace SharpBot.SharpGUI
     {
         Thread thread;
         private readonly Profiles Farming = new Profiles();
+        private readonly Functions Player = new Functions(); 
 
         public Information()
         {
@@ -39,6 +40,7 @@ namespace SharpBot.SharpGUI
                         thread.Start();
                         break;
                     case "Lower Blackrock Spire":
+                        //thread = new Thread(test);
                         thread = new Thread(Farming.LowerBlackrockSpire);
                         thread.Start();
                         break;
@@ -57,6 +59,10 @@ namespace SharpBot.SharpGUI
                 thread = null;
             }
             Thread.Sleep(100);
+        }
+
+        public void test()
+        {
         }
     }
 }
