@@ -505,9 +505,6 @@ namespace SharpBot.Game.Functions
             //get main window
             var window = sharp.Windows.MainWindow;
 
-            //get current player state
-            var state = GetPlayerPtr();
-
             //press key
             window.Keyboard.Press(Binarysharp.MemoryManagement.Native.Keys.W);
 
@@ -650,12 +647,14 @@ namespace SharpBot.Game.Functions
             //pickpocket
             Lua("CastSpellByName(\"Pick Pocket\")");
 
+            //wait for loot window and pickpocket
+            Thread.Sleep(500);
+            AutoLoot();
+
             //leave if mob resist
             LeaveIfSpotted();
 
-            //wait for loot window and pickpocket
-            Thread.Sleep(200);
-            AutoLoot();
+            
         }
 
         public void LeaveIfSpotted()
@@ -681,15 +680,14 @@ namespace SharpBot.Game.Functions
                 Teleport(1117404522, 3277776010, 1111972990);
                 MoveOut();
                 MoveIn();
+                sharp.Windows.MainWindow.Keyboard.PressRelease(Binarysharp.MemoryManagement.Native.Keys.D0);//food keybind
                 localPlayer = GetPlayerPtr();
                 while (sharp[localPlayer + healthOffset, false].Read<int>() <
                     sharp[localPlayer + maxHealthOffset, false].Read<int>())
-                {
-                }
+                { }
                 Lua("CastSpellByName(\"Stealth\")");
                 Thread.Sleep(500);
                 Teleport(oldZ, oldX, oldY);
-                Thread.Sleep(500);
             }
         }
     }

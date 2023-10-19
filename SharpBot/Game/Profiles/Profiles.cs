@@ -1064,9 +1064,8 @@ namespace SharpBot.Game.Profiles
                 Player.TeleportPickPocket(17379391117397545958, verylow);
                 Player.TeleportPickPocket(17379391117363991524, verylow);
                 Player.TeleportPickPocket(17379391117363991522, verylow);
-                Player.TeleportPickPocket(17379391117363030771, verylow);//repeated below
-                Player.TeleportPickPocket(17379391117396585211, verylow);//repeated below
-                /*
+
+                //flame mobs
                 Player.TeleportPickPocket(17379391117413362988, verylow);
                 Player.TeleportPickPocket(17379391117396585771, verylow);
                 Player.TeleportPickPocket(17379391117363030770, verylow);
@@ -1100,7 +1099,6 @@ namespace SharpBot.Game.Profiles
                 Player.TeleportPickPocket(17379391117396585449, verylow);
                 Player.TeleportPickPocket(17379391117363994863, verylow);
                 Player.TeleportPickPocket(17379391117379808563, verylow);
-                //perfect till here
                 Player.TeleportPickPocket(17379391117413362966, verylow);
                 Player.TeleportPickPocket(17379391117396585749, verylow);
                 Player.TeleportPickPocket(17379391117396585752, verylow);
@@ -1132,7 +1130,7 @@ namespace SharpBot.Game.Profiles
                 Player.TeleportPickPocket(17379391117379808545, verylow);
                 Player.TeleportPickPocket(17379391117430140196, verylow);
                 //good till here, flame mobs part
-                */
+                
 
                 //dangerous part works well
                 Player.TeleportPickPocket(17379391116323827363, veryhigh);
@@ -1210,6 +1208,7 @@ namespace SharpBot.Game.Profiles
                 Player.TeleportPickPocket(17379391117514028619, low);
                 //end
 
+                /*
                 //upper blackrock spire part
                 Player.Teleport(1123336846, 3282194683, 1116935417);
                 Player.TeleportPickPocket(17379391126741491012, low);
@@ -1276,7 +1275,7 @@ namespace SharpBot.Game.Profiles
                 Player.TeleportPickPocket(17379391126741492527, low);
                 Player.TeleportPickPocket(17379391126724719363, low);
                 Player.TeleportPickPocket(17379391126758273794, low);
-                Player.TeleportPickPocket(17379391126741492575, low);
+                //Player.TeleportPickPocket(17379391126741492575, low);//summoner that knocks me up
                 Player.TeleportPickPocket(17379391126724715356, low);
                 Player.TeleportPickPocket(17379391126758269790, low);
                 Player.TeleportPickPocket(17379391126758269789, low);
@@ -1286,7 +1285,6 @@ namespace SharpBot.Game.Profiles
                 Player.TeleportPickPocket(17379391126758269843, low);
                 Player.TeleportPickPocket(17379391142579184810, low);
                 Player.TeleportPickPocket(17379391142579184809, low);
-
                 Player.TeleportPickPocket(17379391135130101321, low);
                 Player.TeleportPickPocket(17379391135113324104, low);
                 Player.TeleportPickPocket(17379391135130100908, low);
@@ -1328,6 +1326,7 @@ namespace SharpBot.Game.Profiles
                 Player.TeleportPickPocket(17379391135114355554, low);
                 Player.TeleportPickPocket(17379391135114355558, low);
                 Player.TeleportPickPocket(17379391135147909989, low);
+                */
                 //end
 
                 //leave instance
@@ -1339,7 +1338,7 @@ namespace SharpBot.Game.Profiles
                 Player.MoveIn();
 
                 //wait to avoid instance cooldown
-                //Thread.Sleep(1 * 60000);
+                Thread.Sleep(7 * 60000);
             }
         }
     }
