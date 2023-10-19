@@ -1350,6 +1350,7 @@ namespace SharpBot.Game.Profiles
 
             while (true)
             {
+                verylow = -400000;
                 //first two entrance mobs
                 Player.TeleportPickPocket(17379391111155463016, verylow);
                 Player.TeleportPickPocket(17379391111155463015, verylow);
@@ -1441,6 +1442,7 @@ namespace SharpBot.Game.Profiles
                 Player.TeleportPickPocket(17379391111205794597, verylow);
                 Player.TeleportPickPocket(17379391111222616592, verylow);
                 Player.TeleportPickPocket(17379391111256126241, verylow);
+                verylow = -300000;
                 //end
 
                 //craftsman terrace stairs
