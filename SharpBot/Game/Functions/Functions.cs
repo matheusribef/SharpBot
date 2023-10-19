@@ -589,7 +589,7 @@ namespace SharpBot.Game.Functions
             }, hookAddress);
 
             //wait eip to leave function
-            Thread.Sleep(150);
+            Thread.Sleep(100);
 
             //avoid memory leak
             sharp.Memory.Deallocate(mem_call);
@@ -670,8 +670,7 @@ namespace SharpBot.Game.Functions
             var isStealth = new IntPtr(0x00BC6CA0); //this one is perfect
 
             //check if not in stealth
-            var isSpotted = sharp[isStealth, false].Read<int>();
-            if (isSpotted != 1)
+            if (sharp[isStealth, false].Read<int>() != 1)
             {
                 localPlayer = GetPlayerPtr();
                 oldZ = sharp[localPlayer + 0x9B8, false].Read<uint>();
@@ -679,11 +678,15 @@ namespace SharpBot.Game.Functions
                 oldY = sharp[localPlayer + 0x9C0, false].Read<uint>();
                 if (SharpBot.profile == "Lower Blackrock Spire")
                 {
-                    //Teleport(1117404522, 3277776010, 1111972990); LBRS PORTAL TP
-                    Teleport(1139084535, 1109185386, 3263826840); // BLACKROCK PORTAL TP
+                    Teleport(1117404522, 3277776010, 1111972990);// LBRS PORTAL TP
                 }
-                MoveOut();
+                else if (SharpBot.profile == "Blackrock Depths")
+                {
+                    Teleport(1139084535, 1109185386, 3263826840); // BLACKROCK PORTAL TP
+
+                }
                 MoveIn();
+                MoveOut();
                 sharp.Windows.MainWindow.Keyboard.PressRelease(Binarysharp.MemoryManagement.Native.Keys.D0);//food keybind
                 localPlayer = GetPlayerPtr();
                 while (sharp[localPlayer + healthOffset, false].Read<int>() <
