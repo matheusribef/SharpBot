@@ -131,7 +131,7 @@ namespace SharpBot.Game.Functions
             Target(guid);
 
             Lua("CastSpellByName(\"Pick Pocket\")");
-            Thread.Sleep(500);
+            Thread.Sleep(350);
             AutoLoot();
 
             //if not vanished, pickpocket mob
@@ -685,8 +685,8 @@ namespace SharpBot.Game.Functions
                     Teleport(1139084535, 1109185386, 3263826840); // BLACKROCK PORTAL TP
 
                 }
-                MoveIn();
                 MoveOut();
+                MoveIn();
                 sharp.Windows.MainWindow.Keyboard.PressRelease(Binarysharp.MemoryManagement.Native.Keys.D0);//food keybind
                 localPlayer = GetPlayerPtr();
                 while (sharp[localPlayer + healthOffset, false].Read<int>() <
