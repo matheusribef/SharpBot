@@ -31,8 +31,8 @@ namespace SharpBot.SharpGUI
             //Initialize Checked Saved Box
             if (SharpBot.profile == "Lower Blackrock Spire")
                 boxLowerBlackrockSpire.Checked = true;
-            if (SharpBot.profile == "Scarlet Monastery Armory")
-                boxScarletMonasteryArmory.Checked = true;
+            if (SharpBot.profile == "Blackrock Depths")
+                boxBlackrockDepths.Checked = true;
         }
 
         private void boxLowerBlackrockSpire_CheckedChanged(object sender, EventArgs e)
@@ -40,9 +40,9 @@ namespace SharpBot.SharpGUI
             SelectBox(boxLowerBlackrockSpire);
         }
 
-        private void boxRazorfen_CheckedChanged(object sender, EventArgs e)
+        private void boxBlackrockDepths_CheckedChanged(object sender, EventArgs e)
         {
-            SelectBox(boxScarletMonasteryArmory);
+            SelectBox(boxBlackrockDepths);
         }
     }
 }

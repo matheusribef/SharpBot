@@ -589,7 +589,7 @@ namespace SharpBot.Game.Functions
             }, hookAddress);
 
             //wait eip to leave function
-            Thread.Sleep(100);
+            Thread.Sleep(150);
 
             //avoid memory leak
             sharp.Memory.Deallocate(mem_call);
@@ -677,7 +677,11 @@ namespace SharpBot.Game.Functions
                 oldZ = sharp[localPlayer + 0x9B8, false].Read<uint>();
                 oldX = sharp[localPlayer + 0x9BC, false].Read<uint>();
                 oldY = sharp[localPlayer + 0x9C0, false].Read<uint>();
-                Teleport(1117404522, 3277776010, 1111972990);
+                if (SharpBot.profile == "Lower Blackrock Spire")
+                {
+                    //Teleport(1117404522, 3277776010, 1111972990); LBRS PORTAL TP
+                    Teleport(1139084535, 1109185386, 3263826840); // BLACKROCK PORTAL TP
+                }
                 MoveOut();
                 MoveIn();
                 sharp.Windows.MainWindow.Keyboard.PressRelease(Binarysharp.MemoryManagement.Native.Keys.D0);//food keybind
@@ -688,7 +692,28 @@ namespace SharpBot.Game.Functions
                 Lua("CastSpellByName(\"Stealth\")");
                 Thread.Sleep(500);
                 Teleport(oldZ, oldX, oldY);
+                Thread.Sleep(500);
             }
+        }
+
+        internal void TestHeight(int value)
+        {
+            //memsharp instance
+            var sharp = new MemorySharp(Process.GetProcessesByName("WoW")[0]);
+            
+            //vars
+            var localPlayer = GetPlayerPtr();
+            var oldZ = sharp[localPlayer + 0x9B8, false].Read<uint>();
+            var oldX = sharp[localPlayer + 0x9BC, false].Read<uint>();
+            var oldY = sharp[localPlayer + 0x9C0, false].Read<uint>();
+
+            //test teleports
+            var newY = (uint)((int)oldY + value);
+            Teleport(oldZ, oldX, newY);
+            Thread.Sleep(2000);
+
+            //teleport back
+            Teleport(oldZ, oldX, oldY);
         }
     }
 }

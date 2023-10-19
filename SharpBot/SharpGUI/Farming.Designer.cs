@@ -28,24 +28,24 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.boxScarletMonasteryArmory = new System.Windows.Forms.CheckBox();
+            this.boxBlackrockDepths = new System.Windows.Forms.CheckBox();
             this.boxLowerBlackrockSpire = new System.Windows.Forms.CheckBox();
             this.SuspendLayout();
             // 
-            // boxScarletMonasteryArmory
+            // boxBlackrockDepths
             // 
-            this.boxScarletMonasteryArmory.AutoSize = true;
-            this.boxScarletMonasteryArmory.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(30)))), ((int)(((byte)(30)))));
-            this.boxScarletMonasteryArmory.FlatAppearance.BorderSize = 0;
-            this.boxScarletMonasteryArmory.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.boxScarletMonasteryArmory.Font = new System.Drawing.Font("MS Gothic", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.boxScarletMonasteryArmory.Location = new System.Drawing.Point(12, 12);
-            this.boxScarletMonasteryArmory.Name = "boxScarletMonasteryArmory";
-            this.boxScarletMonasteryArmory.Size = new System.Drawing.Size(191, 17);
-            this.boxScarletMonasteryArmory.TabIndex = 0;
-            this.boxScarletMonasteryArmory.Text = "Scarlet Monastery Armory";
-            this.boxScarletMonasteryArmory.UseVisualStyleBackColor = false;
-            this.boxScarletMonasteryArmory.CheckedChanged += new System.EventHandler(this.boxRazorfen_CheckedChanged);
+            this.boxBlackrockDepths.AutoSize = true;
+            this.boxBlackrockDepths.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(30)))), ((int)(((byte)(30)))));
+            this.boxBlackrockDepths.FlatAppearance.BorderSize = 0;
+            this.boxBlackrockDepths.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.boxBlackrockDepths.Font = new System.Drawing.Font("MS Gothic", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.boxBlackrockDepths.Location = new System.Drawing.Point(12, 12);
+            this.boxBlackrockDepths.Name = "boxBlackrockDepths";
+            this.boxBlackrockDepths.Size = new System.Drawing.Size(135, 17);
+            this.boxBlackrockDepths.TabIndex = 0;
+            this.boxBlackrockDepths.Text = "Blackrock Depths";
+            this.boxBlackrockDepths.UseVisualStyleBackColor = false;
+            this.boxBlackrockDepths.CheckedChanged += new System.EventHandler(this.boxBlackrockDepths_CheckedChanged);
             // 
             // boxLowerBlackrockSpire
             // 
@@ -69,7 +69,7 @@
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(19)))), ((int)(((byte)(19)))), ((int)(((byte)(19)))));
             this.ClientSize = new System.Drawing.Size(269, 123);
             this.Controls.Add(this.boxLowerBlackrockSpire);
-            this.Controls.Add(this.boxScarletMonasteryArmory);
+            this.Controls.Add(this.boxBlackrockDepths);
             this.Font = new System.Drawing.Font("MS Gothic", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.ForeColor = System.Drawing.Color.White;
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
@@ -83,7 +83,7 @@
 
         #endregion
 
-        private System.Windows.Forms.CheckBox boxScarletMonasteryArmory;
+        private System.Windows.Forms.CheckBox boxBlackrockDepths;
         private System.Windows.Forms.CheckBox boxLowerBlackrockSpire;
     }
 }

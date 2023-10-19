@@ -12,6 +12,7 @@ using System.Threading;
 using SharpBot.Game.Functions;
 using Binarysharp.MemoryManagement;
 using SharpBot.Game.Profiles;
+using System.Runtime.ExceptionServices;
 
 namespace SharpBot.SharpGUI
 {
@@ -35,8 +36,8 @@ namespace SharpBot.SharpGUI
 
                 switch (SharpBot.profile)
                 {
-                    case "Scarlet Monastery Armory":
-                        thread = new Thread(Farming.ScarletMonasteryArmory);
+                    case "Blackrock Depths":
+                        thread = new Thread(Farming.BlackrockDepthsExploit);
                         thread.Start();
                         break;
                     case "Lower Blackrock Spire":
@@ -63,17 +64,6 @@ namespace SharpBot.SharpGUI
 
         public void test()
         {
-            //vars
-            var inverselow = -12000000;
-            var inverse = -8000000;
-            var verylow = -3000000;
-            var low = 500000;
-            var medium = 750000;
-            var high = 1500000;
-            var veryhigh = 1700000;
-            var ogre = 2300000;
-            var stairmobs = 8000000;
-
         }
     }
 }
