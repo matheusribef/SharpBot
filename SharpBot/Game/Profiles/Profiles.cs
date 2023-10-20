@@ -1448,7 +1448,7 @@ namespace SharpBot.Game.Profiles
                 Player.TeleportPickPocket(17379391111289682544, inverse);
                 Player.TeleportPickPocket(17379391111289682522, inverse);
                 Player.TeleportPickPocket(17379391111289682523, inverse);
-                inverse -= 100000;
+                inverse -= 200000;
                 Player.TeleportPickPocket(17379391111289682521, inverse);
                 Player.TeleportPickPocket(17379391111289682524, inverse);
                 Player.TeleportPickPocket(17379391111289682525, inverse);
@@ -1456,14 +1456,13 @@ namespace SharpBot.Game.Profiles
                 Player.TeleportPickPocket(17379391111289682527, inverse);
                 Player.TeleportPickPocket(17379391111289682548, inverse);
                 Player.TeleportPickPocket(17379391111289682546, inverse);
-                inverse -= 100000;
+                inverse -= 200000;
                 Player.TeleportPickPocket(17379391111289682539, inverse);
                 Player.TeleportPickPocket(17379391111289682540, inverse);
                 Player.TeleportPickPocket(17379391111289682538, inverse);
                 Player.TeleportPickPocket(17379391113957259791, inverse);
                 //end
                 //after craftsman terrace
-                inverse -= 100000;
                 Player.TeleportPickPocket(17379391111558160905, inverse);
                 Player.TeleportPickPocket(17379391111272948232, inverse);
                 Player.TeleportPickPocket(17379391111272948231, inverse);
