@@ -2029,7 +2029,7 @@ namespace SharpBot.Game.Profiles
                 //end
 
                 //leave instance
-                Player.Teleport(1117404522, 3277776010, 1111972990);
+                Player.Teleport(1139084535, 1109185386, 3263826840); // BLACKROCK PORTAL TP
                 Player.MoveOut();
 
                 //reset and come back
