@@ -1372,7 +1372,6 @@ namespace SharpBot.Game.Profiles
                 Player.TeleportPickPocket(17379391111239349050, verylow);
                 Player.TeleportPickPocket(17379391111256126264, verylow);
                 Player.TeleportPickPocket(17379391111239350957, verylow);
-                Player.TeleportPickPocket(17379391111239350957, verylow);
                 Player.TeleportPickPocket(17379391111222573740, verylow);
                 Player.TeleportPickPocket(17379391111256128170, verylow);
                 Player.TeleportPickPocket(17379391111222573739, verylow);
@@ -1437,7 +1436,8 @@ namespace SharpBot.Game.Profiles
 
                 //craftsman terrace stairs
                 Player.Teleport(1147491226, 3281249762, 3264185165); //Important
-                inverse -= 100000;
+                //layer1
+                inverse = -900000;
                 Player.TeleportPickPocket(17379391111289682534, inverse);
                 Player.TeleportPickPocket(17379391111289682535, inverse);
                 Player.TeleportPickPocket(17379391111289682536, inverse);
@@ -1449,15 +1449,17 @@ namespace SharpBot.Game.Profiles
                 Player.TeleportPickPocket(17379391111289682544, inverse);
                 Player.TeleportPickPocket(17379391111289682522, inverse);
                 Player.TeleportPickPocket(17379391111289682523, inverse);
-                inverse -= 200000;
-                Player.TeleportPickPocket(17379391111289682521, inverse);
+                //layer2
+                inverse = -1200000;
+                Player.TeleportPickPocket(17379391111289682521, inverse);//getting spotted on these
                 Player.TeleportPickPocket(17379391111289682524, inverse);
                 Player.TeleportPickPocket(17379391111289682525, inverse);
                 Player.TeleportPickPocket(17379391111289682526, inverse);
                 Player.TeleportPickPocket(17379391111289682527, inverse);
                 Player.TeleportPickPocket(17379391111289682548, inverse);
                 Player.TeleportPickPocket(17379391111289682546, inverse);
-                inverse -= 200000;
+                //layer3
+                inverse = -1300000;
                 Player.TeleportPickPocket(17379391111289682539, inverse);
                 Player.TeleportPickPocket(17379391111289682540, inverse);
                 Player.TeleportPickPocket(17379391111289682538, inverse);

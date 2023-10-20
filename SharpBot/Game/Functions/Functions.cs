@@ -479,22 +479,23 @@ namespace SharpBot.Game.Functions
             window.Keyboard.PressRelease(Binarysharp.MemoryManagement.Native.Keys.Space);
         }
 
-        public void waitLoadscreen()
+        public bool waitLoadscreen()
         {
             //memsharp instance
             var sharp = new MemorySharp(Process.GetProcessesByName("WoW")[0]);
 
             //read isIngame var
             IntPtr isIngame = new IntPtr(0x00B4B424);
-            while (sharp[isIngame, false].Read<int>() == 1)
+            if (sharp[isIngame, false].Read<int>() == 1)
             {
-                Thread.Sleep(100);
+                return false;
             }
             while (sharp[isIngame, false].Read<int>() == 0)
             {
                 Thread.Sleep(100);
             }
             Thread.Sleep(1000);
+            return true;
         }
 
         public void MoveOut()
@@ -505,11 +506,10 @@ namespace SharpBot.Game.Functions
             //get main window
             var window = sharp.Windows.MainWindow;
 
-            //press key
-            window.Keyboard.Press(Binarysharp.MemoryManagement.Native.Keys.W);
-
             //wait for loadscreen end
-            waitLoadscreen();
+            while (waitLoadscreen() == false)
+                //press key
+                window.Keyboard.Press(Binarysharp.MemoryManagement.Native.Keys.W);
 
             //release key
             window.Keyboard.Release(Binarysharp.MemoryManagement.Native.Keys.W);
@@ -523,11 +523,10 @@ namespace SharpBot.Game.Functions
             //get main window
             var window = sharp.Windows.MainWindow;
 
-            //press key
-            window.Keyboard.Press(Binarysharp.MemoryManagement.Native.Keys.S);
-
-            //wait for loadscreen end
-            waitLoadscreen();
+            //while not in loadscreen
+            while (waitLoadscreen() == false)
+                //press key
+                window.Keyboard.Press(Binarysharp.MemoryManagement.Native.Keys.S);
 
             //release key
             window.Keyboard.Release(Binarysharp.MemoryManagement.Native.Keys.S);
@@ -653,8 +652,6 @@ namespace SharpBot.Game.Functions
 
             //leave if mob resist
             LeaveIfSpotted();
-
-            
         }
 
         public void LeaveIfSpotted()
@@ -683,7 +680,6 @@ namespace SharpBot.Game.Functions
                 else if (SharpBot.profile == "Blackrock Depths")
                 {
                     Teleport(1139084535, 1109185386, 3263826840); // BLACKROCK PORTAL TP
-
                 }
                 MoveOut();
                 MoveIn();
