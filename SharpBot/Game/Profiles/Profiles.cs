@@ -1450,7 +1450,7 @@ namespace SharpBot.Game.Profiles
                 Player.TeleportPickPocket(17379391111289682522, inverse);
                 Player.TeleportPickPocket(17379391111289682523, inverse);
                 //layer2
-                inverse = -1200000;
+                inverse = -1300000;
                 Player.TeleportPickPocket(17379391111289682521, inverse);//getting spotted on these
                 Player.TeleportPickPocket(17379391111289682524, inverse);
                 Player.TeleportPickPocket(17379391111289682525, inverse);
@@ -1459,7 +1459,6 @@ namespace SharpBot.Game.Profiles
                 Player.TeleportPickPocket(17379391111289682548, inverse);
                 Player.TeleportPickPocket(17379391111289682546, inverse);
                 //layer3
-                inverse = -1300000;
                 Player.TeleportPickPocket(17379391111289682539, inverse);
                 Player.TeleportPickPocket(17379391111289682540, inverse);
                 Player.TeleportPickPocket(17379391111289682538, inverse);
