@@ -1498,7 +1498,6 @@ namespace SharpBot.Game.Profiles
                 Player.TeleportPickPocket(17379391111272948247, inverse);
                 Player.TeleportPickPocket(17379391111205796493, inverse);
                 Player.TeleportPickPocket(17379391111272948248, inverse);
-                Player.TeleportPickPocket(17379391111272905347, inverse);
                 Player.TeleportPickPocket(17379391111272905346, inverse);
                 Player.TeleportPickPocket(17379391111558118013, inverse);
                 Player.TeleportPickPocket(17379391111272905340, inverse);
