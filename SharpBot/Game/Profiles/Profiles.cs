@@ -1437,6 +1437,7 @@ namespace SharpBot.Game.Profiles
 
                 //craftsman terrace stairs
                 Player.Teleport(1147491226, 3281249762, 3264185165); //Important
+                inverse -= 100000;
                 Player.TeleportPickPocket(17379391111289682534, inverse);
                 Player.TeleportPickPocket(17379391111289682535, inverse);
                 Player.TeleportPickPocket(17379391111289682536, inverse);
