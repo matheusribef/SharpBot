@@ -45,7 +45,7 @@ namespace SharpBot.Game.Functions
                     "popfd", //restore flags
                     "popad", //restore registers
                     "call " + (uint)ORIGINAL_FUNCTION, //call original function
-                    "mov word [" + (uint)unhook_flag.BaseAddress + "], 1", //set unhook flag to 1
+                    "mov dword [" + (uint)unhook_flag.BaseAddress + "], 1", //set unhook flag to 1
                     "jmp " + ((uint)HOOK_ADDRESS + 5), //jmp back to original return ebp
                 }).ToArray();
 
@@ -74,7 +74,7 @@ namespace SharpBot.Game.Functions
                     },
                     HOOK_ADDRESS);
 
-                Thread.Sleep(50); //make sure EBP left injected code
+                Thread.Sleep(100); //make sure EBP left injected code
 
                 sharp.Memory.Deallocate(hook_mem); //memory cleaning
                 sharp.Memory.Deallocate(unhook_flag); //memory cleaning
