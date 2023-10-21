@@ -664,10 +664,10 @@ namespace SharpBot.Game.Functions
             uint oldZ, oldX, oldY;
             var healthOffset = 0x1DC8;
             var maxHealthOffset = 0x1DE0;
-            var isStealth = new IntPtr(0x00BC6CA0); //this one is perfect
+            var isStealth = new IntPtr(0x7C6C88); //this one is perfect
 
             //check if not in stealth
-            if (sharp[isStealth, false].Read<int>() != 1)
+            if (sharp[isStealth].Read<int>() != 1)
             {
                 localPlayer = GetPlayerPtr();
                 oldZ = sharp[localPlayer + 0x9B8, false].Read<uint>();
