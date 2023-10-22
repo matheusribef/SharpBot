@@ -538,11 +538,17 @@ namespace SharpBot.Game.Functions
             var sharp = new MemorySharp(Process.GetProcessesByName("WoW")[0]);
 
             //vars
+            var guidOffset = 0x30;
             var lPlayer = GetPlayerPtr();
             var jmpBackAddr = new IntPtr(0x005F1F27);
             var updPosition = new IntPtr(0x007C4930);
             var hookAddress = new IntPtr(0x005F1F22);
             var unhook_flag = sharp.Memory.Allocate(1);
+
+            //read player's guid for teleport
+            var pGuid = sharp[lPlayer + guidOffset, false].Read<ulong>();
+            var highBytes = (int)(pGuid >> 32);
+            var lowerBytes = (int)(pGuid & 0xFFFFFFFF);
 
             //call update movement
             var mem_call = sharp.Memory.Allocate(1);
@@ -553,16 +559,11 @@ namespace SharpBot.Game.Functions
             sharp.Assembly.Inject(c_asm, mem_call.BaseAddress);
 
             //inject exploit
-            var zPos = sharp[lPlayer + 0x9B8, false].Read<uint>();
-            var xPos = sharp[lPlayer + 0x9BC, false].Read<uint>();
-            var yPos = sharp[lPlayer + 0x9C0, false].Read<uint>();
             var mem_func = sharp.Memory.Allocate(1);
             string[] asm = {
-                "cmp dword[eax], " + zPos,
+                "cmp dword [eax-2440], " + lowerBytes,
                 "jne " + mem_call.BaseAddress,
-                "cmp dword[eax+4], " + xPos,
-                "jne " + mem_call.BaseAddress,
-                "cmp dword[eax+8], " + yPos,
+                "cmp dword [eax-2436], " + highBytes,
                 "jne " + mem_call.BaseAddress,
                 "mov dword [eax], " + z,
                 "mov dword [eax+4], " + x,
