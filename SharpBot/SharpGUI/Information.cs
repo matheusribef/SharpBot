@@ -65,5 +65,11 @@ namespace SharpBot.SharpGUI
         public void test()
         {
         }
+
+        public void bwlAttunement()
+        {
+            Player.Teleport(1110557529, 3280907967, 1121728863);
+            Player.InteractWithObject(17370386780653653021);
+        }
     }
 }
