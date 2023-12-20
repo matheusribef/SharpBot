@@ -19,6 +19,11 @@ namespace SharpBot.Game.Functions
 {
     internal class Functions
     {
+        //Globals
+        private int zOffset = 0x9B8;
+        private int xOffset = 0x9BC;
+        private int yOffset = 0x9C0;
+
         //Hook Function to Our
         public void Hook(string[] asm)
         {
@@ -91,7 +96,7 @@ namespace SharpBot.Game.Functions
             //Hook ResetInstances()
             for (int i = 1; i < 5; i++)
             {
-                Lua("ResetInstances();");
+                Lua("ResetInstances()");
                 Thread.Sleep(100);
             }
         }
@@ -270,8 +275,8 @@ namespace SharpBot.Game.Functions
             {
                 //get current positions
                 Thread.Sleep(50);
-                uint zPos = sharp[pInstance + 0x9B8, false].Read<uint>();
-                uint xPos = sharp[pInstance + 0x9BC, false].Read<uint>();
+                uint zPos = sharp[pInstance + zOffset, false].Read<uint>();
+                uint xPos = sharp[pInstance + xOffset, false].Read<uint>();
 
                 //check if in same position or near
                 if (zOld == zPos && xOld == xPos)
@@ -348,8 +353,8 @@ namespace SharpBot.Game.Functions
             while (near == false)
             {
                 //get current positions
-                uint zPos = sharp[pInstance + 0x9B8, false].Read<uint>();
-                uint xPos = sharp[pInstance + 0x9BC, false].Read<uint>();
+                uint zPos = sharp[pInstance + zOffset, false].Read<uint>();
+                uint xPos = sharp[pInstance + xOffset, false].Read<uint>();
 
                 //check if in same position
                 if (zOld == zPos && xOld == xPos)
@@ -401,13 +406,13 @@ namespace SharpBot.Game.Functions
             var sharp = new MemorySharp(Process.GetProcessesByName("WoW")[0]);
 
             //vars
-            var firstEntity = true;
             var firstEntityOffset = 0xAC;
             var nextEntityOffset = 0x3C;
             var entityIdOffset = 0x30;
             var entityBase = new IntPtr(0x00B41414);
 
             var curEntity = sharp[entityBase, false].Read<IntPtr>();
+            curEntity = sharp[curEntity + firstEntityOffset, false].Read<IntPtr>();
 
             try
             {
@@ -416,13 +421,65 @@ namespace SharpBot.Game.Functions
                     ulong currentEntityId = sharp[curEntity + entityIdOffset, false].Read<ulong>();
                     if (currentEntityId == guid)
                         return curEntity;
-                    if (firstEntity == true)
-                    {
-                        curEntity = sharp[curEntity + firstEntityOffset, false].Read<IntPtr>();
-                        firstEntity = false;
-                    }
-                    else
-                        curEntity = sharp[curEntity + nextEntityOffset, false].Read<IntPtr>();
+                    curEntity = sharp[curEntity + nextEntityOffset, false].Read<IntPtr>();
+                }
+            }
+            catch
+            {
+                return IntPtr.Zero;
+            }
+        }
+
+        public IntPtr GetEntityByName(String name)
+        {
+            //memsharp instance
+            var sharp = new MemorySharp(Process.GetProcessesByName("WoW")[0]);
+
+            //vars
+            var firstEntityOffset = 0xAC;
+            var nextEntityOffset = 0x3C;
+            var entityBase = new IntPtr(0x00B41414);
+
+            var curEntity = sharp[entityBase, false].Read<IntPtr>();
+            curEntity = sharp[curEntity + firstEntityOffset, false].Read<IntPtr>();
+
+            try
+            {
+                while (true)
+                {
+                    String unitName = GetUnitName(curEntity);
+                    if (unitName == name)
+                        return curEntity;
+                    curEntity = sharp[curEntity + nextEntityOffset, false].Read<IntPtr>();
+                }
+            }
+            catch
+            {
+                return IntPtr.Zero;
+            }
+        }
+
+        public IntPtr GetNodeByName(String name)
+        {
+            //memsharp instance
+            var sharp = new MemorySharp(Process.GetProcessesByName("WoW")[0]);
+
+            //vars
+            var firstEntityOffset = 0xAC;
+            var nextEntityOffset = 0x3C;
+            var entityBase = new IntPtr(0x00B41414);
+
+            var curEntity = sharp[entityBase, false].Read<IntPtr>();
+            curEntity = sharp[curEntity + firstEntityOffset, false].Read<IntPtr>();
+
+            try
+            {
+                while (true)
+                {
+                    String unitName = GetNodeName(curEntity);
+                    if (unitName == name)
+                        return curEntity;
+                    curEntity = sharp[curEntity + nextEntityOffset, false].Read<IntPtr>();
                 }
             }
             catch
@@ -437,14 +494,14 @@ namespace SharpBot.Game.Functions
             var sharp = new MemorySharp(Process.GetProcessesByName("WoW")[0]);
 
             //addresses
+            var objPointer = GetEntityByGuid(guid);
             IntPtr OnRightClick = new IntPtr(0x005F8660);
-            IntPtr objPointer = GetEntityByGuid(guid);
 
             //write func
             string[] asm =
             {
                 "push 0",
-                "mov ecx, " + (uint)objPointer,
+                "mov ecx, " + objPointer,
                 "call " + OnRightClick,
             };
 
@@ -452,7 +509,7 @@ namespace SharpBot.Game.Functions
             Hook(asm);
 
             //casting time
-            Thread.Sleep(6000);
+            Thread.Sleep(4000);
         }
 
         public void Target(ulong guid)
@@ -601,34 +658,37 @@ namespace SharpBot.Game.Functions
             sharp.Windows.MainWindow.Keyboard.PressRelease(Binarysharp.MemoryManagement.Native.Keys.A);
 
         }
-        public void TeleportPickPocket(ulong guid, int distance)
+        public void TeleportPickPocket(ulong guid)
         {
+            //leave if spotted
+            LeaveIfSpotted();
+
+            //then pickpocket
             try
             {
                 //memsharp instance
                 var sharp = new MemorySharp(Process.GetProcessesByName("WoW")[0]);
 
                 //get entity
+                var player = GetPlayerPtr();
                 var entity = GetEntityByGuid(guid);
 
                 //vars
                 uint z;
                 uint x;
-                uint y;
+                float y;
                 ulong EntityId;
-                var OffsetZ = 0x9B8;
-                var OffsetX = 0x9BC;
-                var OffsetY = 0x9C0;
                 var EntityIdOffset = 0x30;
 
-                //read x, y, z and mob guid
-                z = sharp[entity + OffsetZ, false].Read<uint>();
-                x = sharp[entity + OffsetX, false].Read<uint>();
-                y = sharp[entity + OffsetY, false].Read<uint>();
+                //read x, y, z and entity guid
+                z = sharp[entity + zOffset, false].Read<uint>();
+                x = sharp[entity + xOffset, false].Read<uint>();
+                y = sharp[entity + yOffset, false].Read<float>();
                 EntityId = sharp[entity + EntityIdOffset, false].Read<ulong>();
 
                 //teleport above
-                var newY = (uint)((int)y + (int)distance);
+                sharp[player + yOffset, false].Write<float>(y + 6f);
+                var newY = sharp[player + yOffset, false].Read<uint>();
                 Teleport(z, x, newY);
 
                 //pickpocket mob
@@ -636,12 +696,75 @@ namespace SharpBot.Game.Functions
             }
             catch { }
         }
+
+        private int zNodeOffset = 0x248;
+        private int xNodeOffset = 0x24C;
+        private int yNodeOffset = 0x250;
+        public void TeleportAndInteractWithObject(IntPtr entity)
+        {
+            try
+            {
+                //memorysharp instance
+                var sharp = new MemorySharp(Process.GetProcessesByName("WoW")[0]);
+
+                //get player and entity id
+                var player = GetPlayerPtr();
+                var EntityId = sharp[entity + 0x30, false].Read<ulong>();
+
+                //get values
+                var zObj = sharp[entity + zNodeOffset, false].Read<uint>();
+                var xObj = sharp[entity + xNodeOffset, false].Read<uint>();
+                var yObj = sharp[entity + yNodeOffset, false].Read<float>();
+
+                //change player height to bellow object
+                sharp[player + yOffset, false].Write<float>(yObj - 4.5f);
+                var yBelowObj = sharp[player + yOffset, false].Read<uint>();
+                Teleport(zObj, xObj, yBelowObj);
+
+                //Interact
+                InteractWithObject(EntityId);
+                AutoLoot();
+            }
+            catch
+            {
+            }
+        }
+
+        public void GatherAllNodes(String node)
+        {
+            //Memorysharp
+            var sharp = new MemorySharp(Process.GetProcessesByName("WoW")[0]);
+
+            //Try to get node
+            IntPtr nodeUnit;
+            nodeUnit = GetNodeByName(node);
+
+            //Save current player position
+            var player = GetPlayerPtr();
+            var zPlayer = sharp[player + zOffset, false].Read<uint>();
+            var xPlayer = sharp[player + xOffset, false].Read<uint>();
+            var yPlayer = sharp[player + yOffset, false].Read<uint>();
+
+            //Gather nodes until they are none
+            while (nodeUnit != IntPtr.Zero)
+            {
+                TeleportAndInteractWithObject(nodeUnit);
+                nodeUnit = GetNodeByName(node);
+            }
+
+            //Teleport back
+            Teleport(zPlayer, xPlayer, yPlayer);
+        }
+
         public void PickPocketForTeleport(ulong guid)
         {
-            //memsharp instance
+            //get memsharp instance
             MemorySharp sharp = new MemorySharp(Process.GetProcessesByName("WoW")[0]);
 
-            //Select Target
+            //leave if mob resist
+            LeaveIfSpotted();
+
+            //otherwise select Target
             Target(guid);
 
             //pickpocket
@@ -650,9 +773,6 @@ namespace SharpBot.Game.Functions
             //wait for loot window and pickpocket
             Thread.Sleep(500);
             AutoLoot();
-
-            //leave if mob resist
-            LeaveIfSpotted();
         }
 
         public void LeaveIfSpotted()
@@ -665,15 +785,15 @@ namespace SharpBot.Game.Functions
             uint oldZ, oldX, oldY;
             var healthOffset = 0x1DC8;
             var maxHealthOffset = 0x1DE0;
-            var isStealth = new IntPtr(0x7C6C88); //this one is perfect
+            var isStealth = new IntPtr(0x00BC6CA0); //this one is perfect
 
-            //check if not in stealth
-            if (sharp[isStealth].Read<int>() != 1)
+            //chec k if not in stealth
+            if (sharp[isStealth, false].Read<int>() != 1)
             {
                 localPlayer = GetPlayerPtr();
-                oldZ = sharp[localPlayer + 0x9B8, false].Read<uint>();
-                oldX = sharp[localPlayer + 0x9BC, false].Read<uint>();
-                oldY = sharp[localPlayer + 0x9C0, false].Read<uint>();
+                oldZ = sharp[localPlayer + zOffset, false].Read<uint>();
+                oldX = sharp[localPlayer + xOffset, false].Read<uint>();
+                oldY = sharp[localPlayer + yOffset, false].Read<uint>();
                 if (SharpBot.profile == "Lower Blackrock Spire")
                 {
                     Teleport(1117404522, 3277776010, 1111972990);// LBRS PORTAL TP
@@ -690,7 +810,7 @@ namespace SharpBot.Game.Functions
                     sharp[localPlayer + maxHealthOffset, false].Read<int>())
                 { }
                 Lua("CastSpellByName(\"Stealth\")");
-                Thread.Sleep(500);
+                Thread.Sleep(1000);
                 Teleport(oldZ, oldX, oldY);
                 Thread.Sleep(500);
             }
@@ -703,9 +823,9 @@ namespace SharpBot.Game.Functions
             
             //vars
             var localPlayer = GetPlayerPtr();
-            var oldZ = sharp[localPlayer + 0x9B8, false].Read<uint>();
-            var oldX = sharp[localPlayer + 0x9BC, false].Read<uint>();
-            var oldY = sharp[localPlayer + 0x9C0, false].Read<uint>();
+            var oldZ = sharp[localPlayer + zOffset, false].Read<uint>();
+            var oldX = sharp[localPlayer + xOffset, false].Read<uint>();
+            var oldY = sharp[localPlayer + yOffset, false].Read<uint>();
 
             //test teleports
             var newY = (uint)((int)oldY + value);
@@ -714,6 +834,46 @@ namespace SharpBot.Game.Functions
 
             //teleport back
             Teleport(oldZ, oldX, oldY);
+        }
+
+        public String GetUnitName(IntPtr UnitPointer)
+        {
+            try
+            {
+                //Memorysharp instance
+                var sharp = new MemorySharp(Process.GetProcessesByName("WoW")[0]);
+
+                //Read unit name
+                var unitNamePointer = sharp[UnitPointer + 0xB30, false].Read<IntPtr>();
+                var unitNameAddress = sharp[unitNamePointer, false].Read<IntPtr>();
+                var name = sharp[unitNameAddress, false].ReadString(Encoding.UTF8);
+
+                return name;
+            }
+            catch
+            {
+                return "None";
+            }
+        }
+
+        public String GetNodeName(IntPtr UnitPointer)
+        {
+            try
+            {
+                //Memorysharp instance
+                var sharp = new MemorySharp(Process.GetProcessesByName("WoW")[0]);
+
+                //Read unit name
+                var unitNamePointer = sharp[UnitPointer + 0x214, false].Read<IntPtr>();
+                var unitNameAddress = sharp[unitNamePointer + 0x8, false].Read<IntPtr>();
+                var name = sharp[unitNameAddress, false].ReadString(Encoding.UTF8);
+
+                return name;
+            }
+            catch
+            {
+                return "None";
+            }
         }
     }
 }
