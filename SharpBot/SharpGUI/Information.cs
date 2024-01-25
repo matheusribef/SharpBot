@@ -64,9 +64,10 @@ namespace SharpBot.SharpGUI
 
         public void test()
         {
+            Player.GatherAllNodes("Weapon Crate");
             //Player.GatherAllNodes("Copper Vein"); // 1
-            Player.GatherAllNodes("Tin Vein"); // 65
-            Player.GatherAllNodes("Silver Vein"); // 75
+            //Player.GatherAllNodes("Tin Vein"); // 65
+            //Player.GatherAllNodes("Silver Vein"); // 75
             //Player.GatherAllNodes("Iron Deposit"); // 125
             //Player.GatherAllNodes("Gold Vein"); // 150
         }
