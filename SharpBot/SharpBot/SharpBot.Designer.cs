@@ -101,7 +101,7 @@ namespace SharpBot
             this.ForeColor = System.Drawing.Color.White;
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
             this.Name = "SharpBot";
-            this.Text = "#";
+            this.Text = "Notepad++";
             this.buttonsPanel.ResumeLayout(false);
             this.ResumeLayout(false);
 

@@ -19,7 +19,7 @@ namespace SharpBot.SharpGUI
     public partial class Information : Form
     {
         Thread thread;
-        private readonly Profiles Farming = new Profiles();
+        private readonly Profiles farming = new Profiles();
         private readonly Functions Player = new Functions(); 
 
         public Information()
@@ -37,12 +37,15 @@ namespace SharpBot.SharpGUI
                 switch (SharpBot.profile)
                 {
                     case "Blackrock Depths":
-                        thread = new Thread(Farming.BlackrockDepthsExploit);
+                        thread = new Thread(farming.BlackrockDepths);
                         thread.Start();
                         break;
                     case "Lower Blackrock Spire":
-                        thread = new Thread(test);
-                        //thread = new Thread(Farming.LowerBlackrockSpire);
+                        thread = new Thread(farming.LowerBlackrockSpire);
+                        thread.Start();
+                        break;
+                    case "Razorfen Downs":
+                        thread = new Thread(farming.RazorfenDowns);
                         thread.Start();
                         break;
                     default:

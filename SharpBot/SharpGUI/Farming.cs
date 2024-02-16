@@ -5,15 +5,15 @@ namespace SharpBot.SharpGUI
 {
     public partial class Farming : Form
     {
-        public CheckBox SelectedBox;
-        private void SelectBox(CheckBox NewSelectedBox)
+        private CheckBox SelectedBox;
+        public void SelectBox(CheckBox NewSelectedBox)
         {
             if (SelectedBox != null)
             {
                 SelectedBox.Checked = false;
                 SharpBot.profile = null;
             }
-            if (SelectedBox != NewSelectedBox && NewSelectedBox.CheckState != CheckState.Unchecked)
+            if (SelectedBox != NewSelectedBox && NewSelectedBox.CheckState == CheckState.Checked)
             {
                 SelectedBox = NewSelectedBox;
                 SharpBot.profile = NewSelectedBox.Text;
@@ -33,6 +33,8 @@ namespace SharpBot.SharpGUI
                 boxLowerBlackrockSpire.Checked = true;
             if (SharpBot.profile == "Blackrock Depths")
                 boxBlackrockDepths.Checked = true;
+            if (SharpBot.profile == "Razorfen Downs")
+                boxRazorfenDowns.Checked = true;
         }
 
         private void boxLowerBlackrockSpire_CheckedChanged(object sender, EventArgs e)
@@ -43,6 +45,11 @@ namespace SharpBot.SharpGUI
         private void boxBlackrockDepths_CheckedChanged(object sender, EventArgs e)
         {
             SelectBox(boxBlackrockDepths);
+        }
+
+        private void boxRazorfenDowns_CheckedChanged(object sender, EventArgs e)
+        {
+            SelectBox(boxRazorfenDowns);
         }
     }
 }

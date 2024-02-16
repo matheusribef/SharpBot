@@ -136,7 +136,7 @@ namespace SharpBot.Game.Functions
             Target(guid);
 
             Lua("CastSpellByName(\"Pick Pocket\")");
-            Thread.Sleep(350);
+            Thread.Sleep(1000);
             AutoLoot();
 
             //if not vanished, pickpocket mob
@@ -551,7 +551,6 @@ namespace SharpBot.Game.Functions
             {
                 Thread.Sleep(100);
             }
-            Thread.Sleep(1000);
             return true;
         }
 
@@ -687,7 +686,7 @@ namespace SharpBot.Game.Functions
                 EntityId = sharp[entity + EntityIdOffset, false].Read<ulong>();
 
                 //teleport above
-                sharp[player + yOffset, false].Write<float>(y + 6f);
+                sharp[player + yOffset, false].Write<float>(y + 4.5f);
                 var newY = sharp[player + yOffset, false].Read<uint>();
                 Teleport(z, x, newY);
 
@@ -787,13 +786,20 @@ namespace SharpBot.Game.Functions
             var maxHealthOffset = 0x1DE0;
             var isStealth = new IntPtr(0x00BC6CA0); //this one is perfect
 
-            //chec k if not in stealth
+            //check if not in stealth
             if (sharp[isStealth, false].Read<int>() != 1)
             {
                 localPlayer = GetPlayerPtr();
                 oldZ = sharp[localPlayer + zOffset, false].Read<uint>();
                 oldX = sharp[localPlayer + xOffset, false].Read<uint>();
                 oldY = sharp[localPlayer + yOffset, false].Read<uint>();
+
+                //leaving too fast, mobs dont have time do disaggro fix
+                sharp[localPlayer + yOffset, false].Write<float>(sharp[localPlayer + yOffset, false].Read<float>() + 20f);
+                sharp.Windows.MainWindow.Keyboard.PressRelease(Binarysharp.MemoryManagement.Native.Keys.D);
+                Thread.Sleep(2000);
+
+
                 if (SharpBot.profile == "Lower Blackrock Spire")
                 {
                     Teleport(1117404522, 3277776010, 1111972990);// LBRS PORTAL TP
@@ -802,15 +808,26 @@ namespace SharpBot.Game.Functions
                 {
                     Teleport(1139084535, 1109185386, 3263826840); // BLACKROCK PORTAL TP
                 }
-                MoveOut();
+                else if (SharpBot.profile == "Razorfen Downs")
+                {
+                    Teleport(1159863903, 1149986374, 1112178461); //RAZORFEN PORTAL TP
+                }
+                while(waitLoadscreen() == false);
                 MoveIn();
-                sharp.Windows.MainWindow.Keyboard.PressRelease(Binarysharp.MemoryManagement.Native.Keys.D0);//food keybind
+                while (sharp[isStealth, false].Read<int>() != 1)
+                {
+                    Lua("CastSpellByName(\"Stealth\")");
+                    Thread.Sleep(1000);
+                }
+
+                //wait for full health
                 localPlayer = GetPlayerPtr();
                 while (sharp[localPlayer + healthOffset, false].Read<int>() <
                     sharp[localPlayer + maxHealthOffset, false].Read<int>())
                 { }
-                Lua("CastSpellByName(\"Stealth\")");
-                Thread.Sleep(1000);
+
+                //get back to farming
+                Thread.Sleep(2000);
                 Teleport(oldZ, oldX, oldY);
                 Thread.Sleep(500);
             }
