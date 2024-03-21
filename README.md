@@ -1,6 +1,6 @@
 # Sharp Bot
 
-## 🎓 Educational Purpose
+## 🎓 Educational Purposes
 
 This project is intended for educational purposes. It's a great opportunity to learn, explore, and experiment with new technologies, techniques, and concepts.
 
@@ -14,7 +14,7 @@ To start using this project, follow these steps:
 
 1. Fork this repository to your GitHub account.
 2. Clone the repository to your local machine.
-3. Install all necessary dependencies.
+3. Install all necessary dependencies, this uncludes the NuGet packages: BinarySharp and FASM.Net.
 4. Start exploring and learning!
 
 ## 📝 License
