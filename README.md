@@ -10,6 +10,8 @@ This code is provided as is, without warranties of any kind. Use at your own ris
 
 ## 📚 Usage
 
+The following project is designed for the 1.12.1.5875 version of the game World of Warcraft from Blizzard Entertainment.
+
 To start using this project, follow these steps:
 
 1. Fork this repository to your GitHub account.
