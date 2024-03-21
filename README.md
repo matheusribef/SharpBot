@@ -15,7 +15,7 @@ To start using this project, follow these steps:
 1. Fork this repository to your GitHub account.
 2. Clone the repository to your local machine.
 3. Install all necessary dependencies, this uncludes the NuGet packages: BinarySharp and FASM.Net.
-4. Start exploring and learning!
+4. Enjoy!
 
 ## 📝 License
 
