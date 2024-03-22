@@ -2,7 +2,7 @@
 
 ## 🎓 Educational Purposes
 
-This project is intended for educational purposes. It's a great opportunity to learn, explore, and experiment with new technologies, techniques, and concepts.
+This project is intended for educational purposes only. It's a great opportunity to learn, explore, and experiment with new technologies, techniques, and concepts.
 
 ## ⚠️ Warning
 
